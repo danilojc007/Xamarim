@@ -1,0 +1,34 @@
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using Puma.Paginas;
+
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+namespace Puma
+{
+    public partial class App : Application
+    {
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new NavigationPage(new PaginaInicialListaRelatorios());
+            //MainPage = new NavigationPage(new TesteList());
+        }
+
+        protected override void OnStart()
+        {
+            // Handle when your app starts
+        }
+
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
+
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+    }
+}

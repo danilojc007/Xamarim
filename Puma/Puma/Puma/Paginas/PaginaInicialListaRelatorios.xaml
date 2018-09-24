@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Puma.Paginas.PaginaInicialListaRelatorios"
+             xmlns:local="clr-namespace:Puma.Paginas;assembly=Puma">
+    <ContentPage.Resources>
+        <StyleSheet  Source="../style.css" ></StyleSheet>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Padding="1" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="pumoLogo300.png" HeightRequest="40" WidthRequest="120"></Image>
+                <Label Text="Vistoria Técnica" XAlign="Center" YAlign="Center"></Label>
+            </StackLayout>
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Label  Text="Relatórios(5)"></Label>
+            </StackLayout>
+            <ListView HasUnevenRows="true" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{x:Static local:PaginaInicialListaRelatorios.items}" ItemSelected="OnSelection" ItemTapped="OnTap" IsPullToRefreshEnabled="true" Refreshing="OnRefresh">
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="1">
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions >
+                                <!-- CommandParameter is the command to pass to the clicked event handler. Because these are menu items, 
+                            not cells managed by the ListView, CommandParameter is neccesary to determine which 
+                            cell the context action was taken on. -->
+                                <!-- <MenuItem Clicked="OnMore" Text="More" CommandParameter="{Binding .}" /> -->
+                                <MenuItem Clicked="OnDelete" Text="Delete" IsDestructive="true" CommandParameter="{Binding .}" />
+                            </ViewCell.ContextActions>
+                            <!--<StackLayout Orientation="Horizontal"> -->
+                            <!--<Label  Text="{Binding .}"/> -->
+                            <StackLayout Spacing="1" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label  Text="{Binding .Nome}" StyleClass="labelFirstRelatorioInicial" />
+                                <Label  Text="{Binding .Data}" StyleClass="labelSecondRelatorioInicial"/>
+                                <!--</StackLayout> -->
+                                <!--<StackLayout > -->
+                                <!-- <Image Source="iconArrowRight.png"/> -->
+                            </StackLayout>
+                            <!--</StackLayout> -->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--Image="plusIcon70.png"-->
+            <StackLayout Padding="15, 0, 15, 2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="35">
+                <Button Text="Criar Relatório" BackgroundColor="#009CF8" Image="plusIcon30.png" FontSize="Micro" BorderRadius="10" HeightRequest="35"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,21 @@
+﻿.teste {
+    background-color: lightblue;
+}
+
+.testeBorder {
+    border-width: medium;
+}
+
+.borderColor {
+    border-color: lawngreen;
+}
+
+.labelFirstRelatorioInicial {
+    font-weight: bold;
+    font-size: 14;
+}
+
+.labelSecondRelatorioInicial {
+    font-style: italic;
+    font-size: 10;
+}
