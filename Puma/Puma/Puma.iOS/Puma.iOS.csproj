@@ -158,9 +158,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\iconArrowRight.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\plusIcon70.png" />
   </ItemGroup>
   <ItemGroup>
@@ -168,5 +165,14 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\pumoLogo300.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\arrow 0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\proibido.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\check.png" />
   </ItemGroup>
 </Project>

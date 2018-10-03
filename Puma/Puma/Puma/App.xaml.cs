@@ -13,7 +13,7 @@ namespace Puma
             InitializeComponent();
 
             MainPage = new NavigationPage(new PaginaInicialListaRelatorios());
-            //MainPage = new NavigationPage(new TesteList());
+            //MainPage = new PaginaInicialListaRelatorios();
         }
 
         protected override void OnStart()
