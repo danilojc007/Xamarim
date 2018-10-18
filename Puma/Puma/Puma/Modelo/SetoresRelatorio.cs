@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Puma.Modelo
 {
-    class SetoresRelatorio
+    public class SetoresRelatorio
     {
         private int Id { get; set; }
         private string Nome { get; set; }

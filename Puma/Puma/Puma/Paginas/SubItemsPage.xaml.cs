@@ -109,6 +109,8 @@ namespace Puma.Paginas
 
         void OnTap(object sender, ItemTappedEventArgs e)
         {
+            //Navigation.PushAsync(new Reservatorios());
+            Navigation.PushAsync(new CarroselSubItems());
         }
 
         void OnMore(object sender, EventArgs e)
