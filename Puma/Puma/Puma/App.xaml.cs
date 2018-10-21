@@ -11,7 +11,6 @@ namespace Puma
         public App()
         {
             InitializeComponent();
-
             MainPage = new NavigationPage(new PaginaInicialListaRelatorios());
             //MainPage = new PaginaInicialListaRelatorios();
         }

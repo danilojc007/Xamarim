@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Puma.Paginas.Reservatorios" >
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <ScrollView>
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand"  HeightRequest="40" Margin="10, 0, 10, 0">
+                        <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="StartAndExpand">
+                            <Image Source="pumoLogo300.png" HeightRequest="40" WidthRequest="120"></Image>
+                        </StackLayout>
+                        <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                            <Label Text="Vistoria Técnica" XAlign="Center" YAlign="Center"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout Padding="0" Margin="10, -10, 10, -10"  Orientation="Vertical" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                        <Grid RowSpacing="-10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Text="Nomenclatura:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNomenclatura" Title="Nomenclatura" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+                            <Label Grid.Column="0" Grid.Row="1" Text="Tipo:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerTipo" Title="Tipo" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small" ></Picker>
+                            <Label  Grid.Column="0" Grid.Row="2" Text="Local:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Entry Grid.Column="1" Grid.Row="2" Placeholder="Endereço da Vistoria" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="FillAndExpand"></Entry>
+                        </Grid>
+                    </StackLayout>
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout Padding="0" Margin="10, -10, 10, -10"  Orientation="Vertical" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                        <Grid RowSpacing="-10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Item Auditado:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerAuditado" Title="Item Auditado" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Planejado:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerPlanejado" Title="Planejado" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Executado:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerExecutado"  Title="Executado" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Há apontamentos:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="3" x:Name="PickerApontamentos" Title="Há apontamentos" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+                        </Grid>
+
+
+                    </StackLayout>
+                    <BoxView HeightRequest="1" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Portinhola Acesso" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Fechamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerFechamento"  Title="Fechamento" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Hermético:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerHermetico" Title="Hermético" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Status geral:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerStatusGeral"  Title="Status geral" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                        </Grid>
+                        <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                            <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="AdicionarFotoProt"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="RemoverUltimaFotoPort"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                        </Grid>
+                        <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                        <Grid x:Name="GridFotosPort" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+
+                        <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                        <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+
+                        <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaPortinhola"  Title="Nota" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+                        </Grid>
+
+
+                    </StackLayout>
+
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Ipermeabilização" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Tipo:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerTipoIper"  Title="Tipo" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Estrutura:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerEstruturaIper" Title="Estrutura" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Status geral:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerStatusGeralIper" Title="Status geral" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+
+                            </Grid>
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoIper"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoIper"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosIper" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0"  Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaIper" Title="Nota" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Limpeza e Elétrica" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Água:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerAguaLimp"  Title="Água" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Bóia Nivel:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerBoiaLimp" Title="Bóia Nivel" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Status geral:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerStatusGeralLimp"  Title="Status geral" VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+                            </Grid>
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoLimp"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoLimp"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosLimp" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaLimp" Title="Nota"  VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="Black" HorizontalOptions="FillAndExpand"></BoxView>
+
+                    <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"></ColumnDefinition>
+                            <ColumnDefinition Width="70*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0" Text="Nota Final:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                        <Label  Grid.Column="1" Grid.Row="0" x:Name="txtNotaFinal" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="1" Text="Nivel de Risco:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                        <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerNivelRisco" Title="Nivel de Risco"  VerticalOptions="Center"
+                            HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
+                    </Grid>
+
+                    <StackLayout Padding="15, 0, 15, 2" VerticalOptions="End" HorizontalOptions="FillAndExpand">
+                        <Button Text="Adicionar" x:Name="buttonAddSave" BackgroundColor="#009CF8" Image="plusIcon30.png" FontSize="Medium" BorderRadius="10" Clicked="PressSaveAdd"></Button>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

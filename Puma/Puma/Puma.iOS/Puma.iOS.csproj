@@ -89,11 +89,16 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
-    <None Include="Info.plist" />
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,5 +179,14 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\negative.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\mailsend.png" />
   </ItemGroup>
 </Project>

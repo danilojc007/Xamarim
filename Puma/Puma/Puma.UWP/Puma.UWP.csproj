@@ -132,6 +132,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="check.png" />
+    <Content Include="mailsend.png" />
+    <Content Include="negative.png" />
+    <Content Include="plus.png" />
     <Content Include="plusIcon30.png" />
     <Content Include="plusIcon70.png" />
     <Content Include="proibido.png" />

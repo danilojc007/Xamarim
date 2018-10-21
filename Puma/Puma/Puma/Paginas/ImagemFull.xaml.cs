@@ -12,10 +12,11 @@ namespace Puma.Paginas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ImagemFull : ContentPage
     {
-        public ImagemFull(string image)
+        public ImagemFull(StreamImageSource image)
         {
             InitializeComponent();
             Image.Source = image;
+            //Image = image;
         }
     }
 }
