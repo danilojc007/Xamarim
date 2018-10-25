@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Puma.Paginas.EnviarEmail"
+             xmlns:local="clr-namespace:Puma.Paginas;assembly=Puma"
+             Title="Enviar E-mail">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand"  HeightRequest="40" Margin="10, 0, 10, 0">
+                    <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="StartAndExpand">
+                        <Image Source="pumoLogo300.png" HeightRequest="40" WidthRequest="120"></Image>
+                    </StackLayout>
+                    <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                        <Label Text="Destinatários" XAlign="Center" YAlign="Center" FontSize="Medium"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <BoxView HeightRequest="1" Margin="0,-10, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+            <StackLayout Padding="0" Margin="10, 0, 10, -10"  Orientation="Vertical" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                <Grid RowSpacing="-10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="70*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label  Grid.Column="0" Grid.Row="0" Text="E-mail:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Medium" HorizontalOptions="Start"></Label>
+                    <Entry x:Name="EntryEmail" Grid.Column="1" Grid.Row="0" Placeholder="E-mail" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="Medium" HorizontalOptions="FillAndExpand"></Entry>
+                </Grid>
+            </StackLayout>
+            <Grid RowSpacing="-10"  Margin="10, 10, 10, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="AdicionarEmail"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+            </Grid>
+            <BoxView HeightRequest="1" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+            <StackLayout Padding="0" Margin="0, -7, 0, -7" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
+                <Label Text="E-mails" FontSize="Medium"></Label>
+            </StackLayout>
+            <ListView ItemsSource="{x:Static local:EnviarEmail.emails}" HasUnevenRows="true" VerticalOptions="FillAndExpand" Margin="10, 0, 10, 0" HorizontalOptions="FillAndExpand"  IsPullToRefreshEnabled="true" Refreshing="OnRefresh">
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="1">
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions >
+                                <MenuItem Clicked="OnDelete" Text="Delete" IsDestructive="true" CommandParameter="{Binding .}" />
+                            </ViewCell.ContextActions>
+                            <StackLayout Spacing="1" Margin="0, 2, 0, 0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                <StackLayout Spacing="0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="StartAndExpand">
+                                    <!--<Label  Text="{Binding .nome}" StyleClass="labelFirstRelatorioInicial" FontSize="Medium" />-->
+                                    <Label  Text="{Binding .email}" FontSize="Medium"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Padding="15, 0, 15, 2" VerticalOptions="End" HorizontalOptions="FillAndExpand">
+                <Button Text="Enviar Relatório" Clicked="PressEnviarEmail" BackgroundColor="#009CF8" Image="mailsend.png" FontSize="Medium" BorderRadius="10"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

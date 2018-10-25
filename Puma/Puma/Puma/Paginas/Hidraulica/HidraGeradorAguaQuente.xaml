@@ -3,10 +3,852 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Puma.Paginas.HidraGeradorAguaQuente">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <ScrollView>
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand"  HeightRequest="40" Margin="10, 0, 10, 0">
+                        <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="StartAndExpand">
+                            <Image Source="pumoLogo300.png" HeightRequest="40" WidthRequest="120"></Image>
+                        </StackLayout>
+                        <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                            <Label Text="Vistoria Técnica" XAlign="Center" YAlign="Center"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout Padding="0" Margin="10, -10, 10, -10"  Orientation="Vertical" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                        <Grid RowSpacing="-10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Text="Nomenclatura:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNomenclatura" Title="Nomenclatura" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+                            <Label Grid.Column="0" Grid.Row="1" Text="Sistema:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerSistema" Title="Sistema" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+                            <Label Grid.Column="0" Grid.Row="2" Text="Alimentação:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerAlimentacao" Title="Alimentação" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+                        </Grid>
+                    </StackLayout>
+                    <BoxView HeightRequest="1" Margin="0, 0, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout Padding="0" Margin="10, -10, 10, -10"  Orientation="Vertical" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                        <Grid RowSpacing="-10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Item Auditado:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerAuditado" Title="Item Auditado" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Planejado:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerPlanejado" Title="Planejado" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Executado:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerExecutado"  Title="Executado" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Há apontamentos:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="3" x:Name="PickerApontamentos" Title="Há apontamentos" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+                        </Grid>
+
+
+                    </StackLayout>
+                    <!--Boiler-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Boiler" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Material:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerBoilerMaterial"  Title="Material" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Isol. Térmico:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerBoilerIsolTermico" Title="Isol. Térmico:" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Isol. Mecânico:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerBoilerIsolMecanico" Title="Isol. Mecânico" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Porta Inspeção:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="3" x:Name="PickerBoilerPortaInspecao" Title="Porta Inspeção" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            <Label Grid.Column="0" Grid.Row="4" Text="Term. Digital:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="4" x:Name="PickerBoilerTermDigital" Title="Term. Digital:" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="5" Text="Term. Analógico:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="5" x:Name="PickerBoilerTerAnalogico"  Title="Term. Analógico" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="6" Text="Válvula alívio:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="6" x:Name="PickerBoilerValvulaAlivio"  Title="Válvula alívio" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="7" Text="Status geral:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="7" x:Name="PickerBoilerStatusGeral"  Title="Status geral" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                        </Grid>
+                        <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                            <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="AdicionarFotoBoiler"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="RemoverUltimaFotoBoiler"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                        </Grid>
+                        <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                        <Grid x:Name="GridFotosBoiler" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+
+                        <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                        <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+
+                        <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaBoiler"  Title="Nota" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                        </Grid>
+
+
+                    </StackLayout>
+                    <!--Boiler-->
+                    <!--Aquecedor Passagem-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Aquecedor Passagem" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Instalação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerAquePassInstalacao" Title="Instalação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Acabamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerAquePassAcabamento" Title="Acabamento" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Detector Gás:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerAquePassDetectorGas" Title="Detector Gás" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="3" Text="Fixação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="3" x:Name="PickerAquePassFixacao" Title="Fixação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            </Grid>
+
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoAquePass"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoAquePass"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosAquePass" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0"  Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerFotoAqueNota" Title="Nota" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+                    <!--Aquecedor Passagem-->
+                    <!--Bomba Calor-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Bomba de Calor" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Instalação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerBombaCalorInstalcao"  Title="Instalação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Acabamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerBombaCalorAcabamento" Title="Acabamento" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Vazamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerBombaCalorVazamento" Title="Vazamento" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+                            </Grid>
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoBombaCalor"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoBombaCalor"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosBombaCalor" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerBombaCalorNota" Title="Nota"  VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+                    <!--Bomba Calor-->
+                    <!--Placa Solar-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Placa Solar" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Placas solares:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerPlacaSolarPlacas"  Title="Placas solares" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Tubulação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerPlacaSolarTubulacao" Title="Tubulação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Fixação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerPlacaSolarFixacao" Title="Fixação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            </Grid>
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoPlacaSolar"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoPlacaSolar"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosPlacaSolar" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerPlacaSolarNota" Title="Nota"  VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+                    <!--Placa Solar-->
+                    <!--Bomba-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Bomba" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Rolamentos:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerBombaRolamentos"  Title="Rolamentos" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Acoplamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerBombaAcoplamento" Title="Acoplamento" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Selo Mecânico:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerBombaSeloMecanico" Title="Selo Mecânico" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Aquecimento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="3" x:Name="PickerBombaAquecimento" Title="Aquecimento" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            <Label Grid.Column="0" Grid.Row="4" Text="Pintura:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="4" x:Name="PickerBombaPintura" Title="Pintura" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            <Label Grid.Column="0" Grid.Row="5" Text="Status geral:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="5" x:Name="PickerBombaStatusGeral"  Title="Status geral" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                        </Grid>
+                        <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                            <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="AdicionarFotoBomba"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="RemoverUltimaFotoBomba"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                        <Grid x:Name="GridFotosBomba" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+
+                        <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                        <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+
+                        <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaBomba"  Title="Nota" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                        </Grid>
+
+
+                    </StackLayout>
+                    <!--Bomba-->
+                    <!--Bomba Fixação Eletetrica-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Bomba Fixação/Elétrica" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Fixação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerBfeFixacao" Title="Fixação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Vibra Stop:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerBfeVibStop" Title="Vibra Stop" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Inst. Elétrica:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerBfeInstaEletrica" Title="Inst. Elétrica" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="3" Text="Status geral:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="3" x:Name="PickerBfeStatusGeral" Title="Status geral" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+
+                            </Grid>
+
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoBfe"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoBfe"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosBfe" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0"  Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaBfe" Title="Nota" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+                    <!--Bomba Fização-->
+                    <!--Tubulação-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Tubulação" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Material:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerTubMaterial"  Title="Material" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Acabamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerTubAcabamento" Title="Acabamento" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Vazamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerTubVazamento" Title="Vazamento" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="3" Text="Fixação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="3" x:Name="PickerTubFixacao"  Title="Fixação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+                            </Grid>
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoTub"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoTub"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosTub" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaTub" Title="Nota"  VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!--Tubulação-->
+                    <!--Registros-->
+
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="10, 0, 10, 0" BackgroundColor="LightGray">
+                        <StackLayout Padding="0" Margin="0, 0, 0, 0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Label Text="Registros" FontSize="Medium"></Label>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="0" Margin="0, 0, 0, 0" BackgroundColor="LightGray">
+
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Text="Instação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerRegInstalacao"  Title="Instação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="1" Text="Acabamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerRegAcabamento" Title="Acabamento" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                                <Label Grid.Column="0" Grid.Row="2" Text="Fixação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerRegFixacao" Title="Fixação" VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+
+                            </Grid>
+                            <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Text="Fotos"  FontSize="Medium" HorizontalOptions="FillAndExpand" XAlign="Center"></Label>
+                                <StackLayout Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
+                                    <Image  Source="plus.png"  HeightRequest="30"  WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="AdicionarFotoReg"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Source="negative.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RemoverUltimaFotoReg"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Margin="0, 2, 0, 0" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"></BoxView>
+                            <Grid x:Name="GridFotosReg" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"></RowDefinition>
+                                </Grid.RowDefinitions>
+                            </Grid>
+
+                            <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+
+                            <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="70*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="Nota:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNotaReg" Title="Nota"  VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerNotaChanged"></Picker>
+                            </Grid>
+
+                        </StackLayout>
+                    </StackLayout>
+                    <!--Registros-->
+                    <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="Black" HorizontalOptions="FillAndExpand"></BoxView>
+
+                    <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"></ColumnDefinition>
+                            <ColumnDefinition Width="70*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0" Text="Nota Final:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                        <Label  Grid.Column="1" Grid.Row="0" x:Name="txtNotaFinal" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+
+                        <Label Grid.Column="0" Grid.Row="1" Text="Nivel de Risco:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
+                        <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerNivelRisco" Title="Nivel de Risco"  VerticalOptions="Center"
+                HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
+                    </Grid>
+
+                    <StackLayout Padding="15, 0, 15, 2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="35">
+                        <Button Text="Adicionar" x:Name="buttonAddSave" BackgroundColor="#009CF8" Image="plusIcon30.png" FontSize="Micro" BorderRadius="10" HeightRequest="35" Clicked="PressSaveAdd"></Button>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -74,7 +74,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Padding="15, 0, 15, 2" VerticalOptions="End" HorizontalOptions="FillAndExpand">
-                <Button Text="Enviar Relatório" BackgroundColor="#009CF8" Image="mailsend.png" FontSize="Medium" BorderRadius="10"></Button>
+                <Button Text="Enviar Relatório" Clicked="PressBtnEviarRelatorio" BackgroundColor="#009CF8" Image="mailsend.png" FontSize="Medium" BorderRadius="10"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

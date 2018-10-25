@@ -17,7 +17,7 @@ namespace Puma.Paginas
     public partial class HidraBarrilhete : ContentPage
     {
         private List<ComboBox> simples = new List<ComboBox>();
-        private List<ComboBox> nomeclatura = new List<ComboBox>();
+        public List<ComboBox> nomeclatura = new List<ComboBox>();
         private List<ComboBox> apontamentos = new List<ComboBox>();
         private List<ComboBox> nota = new List<ComboBox>();
         private List<ComboBox> nivelRisco = new List<ComboBox>();
@@ -261,6 +261,7 @@ namespace Puma.Paginas
             this.editado = 'S';
             buttonAddSave.Text = "Salvar";
             buttonAddSave.Image = "arrow20.png";
+            this.editado = 'N';
         }
 
 
@@ -338,7 +339,7 @@ namespace Puma.Paginas
 
             if (!CrossMedia.Current.IsTakePhotoSupported && !CrossMedia.Current.IsPickPhotoSupported)
             {
-                await DisplayAlert("Message", "Captura e seleção de foto não suportada", "ok");
+                await DisplayAlert("Alerta!", "Captura e seleção de foto não suportada", "ok");
             }
             else
             {

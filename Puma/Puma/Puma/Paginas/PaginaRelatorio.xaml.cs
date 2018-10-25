@@ -73,5 +73,11 @@ namespace Puma.Paginas
             //items.Remove(item.CommandParameter.ToString());
             //items.Remove(item.CommandParameter);
         }
+
+        public void PressBtnEviarRelatorio(object sender, EventArgs e)
+        {
+            var page = new EnviarEmail();
+            Navigation.PushAsync(page);
+        }
     }
 }

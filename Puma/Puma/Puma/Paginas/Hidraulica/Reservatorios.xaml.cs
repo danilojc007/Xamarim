@@ -307,6 +307,7 @@ namespace Puma.Paginas
                 this.Save();
                 buttonAddSave.Text = "Adicionar";
                 buttonAddSave.Image = "plusIcon30.png";
+                this.editado = 'N';
 
             }
             else
@@ -388,7 +389,7 @@ namespace Puma.Paginas
 
             if (!CrossMedia.Current.IsTakePhotoSupported && !CrossMedia.Current.IsPickPhotoSupported)
             {
-                await DisplayAlert("Message", "Captura e seleção de foto não suportada", "ok");
+                await DisplayAlert("Alerta!", "Captura e seleção de foto não suportada", "ok");
             }
             else
             {
