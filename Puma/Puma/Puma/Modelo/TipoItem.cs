@@ -6,14 +6,14 @@ namespace Puma.Modelo
 {
     public class TipoItem
     {
-        public string Codigo { get; set; }
+        public int Id { get; set; }
         public string Nome { get; set; }
         public string Icone { get; set; }
         public string Status { get; set; }
 
-        public TipoItem(string Codigo, string Nome, string Icone, string Status)
+        public TipoItem(int Id, string Nome, string Icone, string Status)
         {
-            this.Codigo = Codigo;
+            this.Id = Id;
             this.Nome = Nome;
             this.Icone = Icone;
             this.Status = Status;

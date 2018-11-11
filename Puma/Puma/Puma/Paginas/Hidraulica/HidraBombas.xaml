@@ -29,7 +29,7 @@
                             <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNomenclatura" Title="Nomenclatura" VerticalOptions="Center"
               HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
                             <Label  Grid.Column="0" Grid.Row="1" Text="Local:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Entry Grid.Column="1" Grid.Row="1" Placeholder="Localização" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="FillAndExpand"></Entry>
+                            <Entry x:Name="EntryLocalizacao" Grid.Column="1" Grid.Row="1" Placeholder="Localização" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="FillAndExpand"></Entry>
                         </Grid>
                     </StackLayout>
                     <BoxView HeightRequest="1" Margin="0, 0, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
@@ -148,7 +148,7 @@
                         </Grid>
 
                         <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                        <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                        <Editor x:Name="EditorComentarioBomba" HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                         <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                             <Grid.ColumnDefinitions>
@@ -244,7 +244,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                            <Editor x:Name="EditorComentarioBfe"  HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>

@@ -6,13 +6,13 @@ namespace Puma.Modelo
 {
     public class SubItem
     {
-        public string Codigo { get; set; }
+        public int Id { get; set; }
         public string Nome { get; set; }
         public int Quantidade { get; set; }
 
-        public SubItem(string Codigo, string Nome, int Quantidade)
+        public SubItem(int Id, string Nome, int Quantidade)
         {
-            this.Codigo = Codigo;
+            this.Id = Id;
             this.Nome = Nome;
             this.Quantidade = Quantidade;
         }

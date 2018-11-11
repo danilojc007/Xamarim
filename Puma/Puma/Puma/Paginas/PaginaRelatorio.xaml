@@ -20,8 +20,8 @@
             <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
             <StackLayout Margin="10, -5, 10, 0" Padding="0" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <!--<StackLayout  Margin="0, -5, 0, 0" Padding="0" Orientation="Vertical" VerticalOptions="Start" HorizontalOptions="Center">-->
-                <Label Text="23/09/2018 - 22:10:30" VerticalTextAlignment="Center"  XAlign="Center"  FontSize="Medium" HorizontalOptions="FillAndExpand"></Label>
-                <Entry Placeholder="Ct a ser Vistoriado"  Margin="0, -10, 0, 0" VerticalOptions="Center" HorizontalTextAlignment="Center" FontSize="Medium" HorizontalOptions="FillAndExpand"></Entry>
+                <Label x:Name="LabelDataHora" Text="" VerticalTextAlignment="Center"  XAlign="Center"  FontSize="Medium" HorizontalOptions="FillAndExpand"></Label>
+                <Entry x:Name="CtVistoriado" Placeholder="Ct a ser Vistoriado"  Margin="0, -10, 0, 0" VerticalOptions="Center" HorizontalTextAlignment="Center" FontSize="Medium" HorizontalOptions="FillAndExpand"></Entry>
             </StackLayout>
             <BoxView HeightRequest="1" Margin="0, -10, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
             <Grid RowSpacing="-10" Margin="10, 0, 10, 0">
@@ -35,13 +35,13 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Text="Gerente:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
-                <Entry Grid.Column="1" Grid.Row="0" Placeholder="Nome do Gerente" VerticalOptions="Center" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"></Entry>
+                <Entry x:Name="EntryGerente" Grid.Column="1" Grid.Row="0" Placeholder="Nome do Gerente" VerticalOptions="Center" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"></Entry>
 
                 <Label  Grid.Column="0" Grid.Row="1" Text="Auditor:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                <Entry  Grid.Column="1" Grid.Row="1" Placeholder="Nome do Auditor" VerticalOptions="Center" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"></Entry>
+                <Entry x:Name="EntryAuditor" Grid.Column="1" Grid.Row="1" Placeholder="Nome do Auditor" VerticalOptions="Center" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"></Entry>
 
                 <Label Grid.Column="0" Grid.Row="2" Text="Endereço:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                <Entry Grid.Column="1" Grid.Row="2" Placeholder="Endereço da Vistoria" VerticalOptions="Center" HorizontalTextAlignment="Center" FontSize="Small" HorizontalOptions="FillAndExpand"></Entry>
+                <Entry x:Name="EntryEndereco" Grid.Column="1" Grid.Row="2" Placeholder="Endereço da Vistoria" VerticalOptions="Center" HorizontalTextAlignment="Center" FontSize="Small" HorizontalOptions="FillAndExpand"></Entry>
             </Grid>
             <BoxView HeightRequest="1" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
             <StackLayout Padding="0" Margin="0, -7, 0, -7" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">

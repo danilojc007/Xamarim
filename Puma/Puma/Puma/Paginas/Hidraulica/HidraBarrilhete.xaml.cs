@@ -40,10 +40,19 @@ namespace Puma.Paginas
         private List<ComboBox> reg_fixacao = new List<ComboBox>();
         private char editado = 'N';
         private Manipulacao manipulacao = new Manipulacao();
-        private CarouselPage carousel = null;
-        public HidraBarrilhete(CarouselPage carousel)
+        private CarroselSubItems carousel = null;
+
+
+        // parte do Banco
+        List<Puma.ModelosBanco.DetalhesItem> detalhesItem = null;
+        Puma.ModelosBanco.ItemSubItem itemSubItem = null;
+        Puma.Banco.AcessoBanco database = null;
+
+        public HidraBarrilhete(CarroselSubItems carousel, Puma.ModelosBanco.ItemSubItem itemSubItem, Puma.Banco.AcessoBanco conexao)
         {
             InitializeComponent();
+            this.database = conexao;
+            this.itemSubItem = itemSubItem;
             this.carousel = carousel;
 
             simples.Add(new ComboBox(1, "Sim", "#008000"));
@@ -236,9 +245,250 @@ namespace Puma.Paginas
             PickerNivelRisco.ItemsSource = nivelRisco;
             PickerNivelRisco.SelectedIndexChanged += this.PickerSimpleChanged;
 
-
-
+            this.CarregaDoBanco();
         }
+        public int GetContador()
+        {
+            return itemSubItem.Contador;
+        }
+        public Boolean GetEditado()
+        {
+            if (this.editado == 'S')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void CarregaDoBanco()
+        {
+            detalhesItem = database.GetDetalhesItems(this.itemSubItem);
+            //string teste = PickerNivelRisco.ToString();
+            //PickerNivelRisco.SelectedIndex = 1;
+            //var teste = this.FindByName<Picker>("PickerNivelRisco");
+            if (detalhesItem.Count != 0)
+            {
+                for (var i = 0; i < detalhesItem.Count; i++)
+                {
+                    if (detalhesItem[i].Tipo == "Picker")
+                    {
+                        this.FindByName<Picker>(detalhesItem[i].Name).SelectedIndex = detalhesItem[i].Index;
+                    }
+                    else
+                    {
+                        if (detalhesItem[i].Tipo == "Entry")
+                        {
+                            this.FindByName<Entry>(detalhesItem[i].Name).Text = detalhesItem[i].Text;
+                        }
+                        else
+                        {
+                            if (detalhesItem[i].Tipo == "Editor")
+                            {
+                                this.FindByName<Editor>(detalhesItem[i].Name).Text = detalhesItem[i].Text;
+                            }
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                this.editado = 'S';
+            }
+        }
+
+
+        public void Save()
+        {
+            if (detalhesItem.Count != 0)
+            {
+                for (var i = 0; i < detalhesItem.Count; i++)
+                {
+                    if (detalhesItem[i].Tipo == "Picker")
+                    {
+                        //this.FindByName<Picker>(detalhesItem[i].Name).SelectedIndex = detalhesItem[i].Index;
+                        detalhesItem[i].Index = this.FindByName<Picker>(detalhesItem[i].Name).SelectedIndex;
+                    }
+                    else
+                    {
+                        if (detalhesItem[i].Tipo == "Entry")
+                        {
+                            detalhesItem[i].Text = this.FindByName<Entry>(detalhesItem[i].Name).Text;
+                        }
+                        else
+                        {
+                            if (detalhesItem[i].Tipo == "Editor")
+                            {
+                                detalhesItem[i].Text = this.FindByName<Editor>(detalhesItem[i].Name).Text;
+                            }
+                            else
+                            {
+                                if (detalhesItem[i].Tipo == "Label")
+                                {
+                                    detalhesItem[i].Text = this.FindByName<Label>(detalhesItem[i].Name).Text;
+                                }
+
+                            }
+                        }
+                    }
+
+                    database.UpdateDetalheItem(detalhesItem[i]);
+                }
+
+            }
+            else
+            {
+                //create
+                Puma.ModelosBanco.DetalhesItem detalhe = null;
+
+                //1
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNomenclatura, "PickerNomenclatura");
+                database.CreateDetalheItem(detalhe);
+                //2
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerAuditado, "PickerAuditado");
+                database.CreateDetalheItem(detalhe);
+                //3
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerPlanejado, "PickerPlanejado");
+                database.CreateDetalheItem(detalhe);
+                //4
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerExecutado, "PickerExecutado");
+                database.CreateDetalheItem(detalhe);
+                //5
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerApontamentos, "PickerApontamentos");
+                database.CreateDetalheItem(detalhe);
+                //6
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerRolamentos, "PickerRolamentos");
+                database.CreateDetalheItem(detalhe);
+                //7
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerAcoplamento, "PickerAcoplamento");
+                database.CreateDetalheItem(detalhe);
+                //8
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerSeloMecanico, "PickerSeloMecanico");
+                database.CreateDetalheItem(detalhe);
+                //9
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBombaAquecimento, "PickerBombaAquecimento");
+                database.CreateDetalheItem(detalhe);
+                //10
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBombaPintura, "PickerBombaPintura");
+                database.CreateDetalheItem(detalhe);
+                //11
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBombaStatusGeral, "PickerBombaStatusGeral");
+                database.CreateDetalheItem(detalhe);
+                //12
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNotaBomba, "PickerNotaBomba");
+                database.CreateDetalheItem(detalhe);
+                //13
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBfeFixacao, "PickerBfeFixacao");
+                database.CreateDetalheItem(detalhe);
+                //14
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBfeVibStop, "PickerBfeVibStop");
+                database.CreateDetalheItem(detalhe);
+                //15
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBfeInstaEletrica, "PickerBfeInstaEletrica");
+                database.CreateDetalheItem(detalhe);
+                //16
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBfeStatusGeral, "PickerBfeStatusGeral");
+                database.CreateDetalheItem(detalhe);
+                //17
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNotaBfe, "PickerNotaBfe");
+                database.CreateDetalheItem(detalhe);
+                //18
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerTubMaterial, "PickerTubMaterial");
+                database.CreateDetalheItem(detalhe);
+                //19
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerTubAcabamento, "PickerTubAcabamento");
+                database.CreateDetalheItem(detalhe);
+                //20
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerTubVazamento, "PickerTubVazamento");
+                database.CreateDetalheItem(detalhe);
+                //21
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerTubFixacao, "PickerTubFixacao");
+                detalhe.Tipo = "Picker";
+                database.CreateDetalheItem(detalhe);
+                //22
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNotaTub, "PickerNotaTub");
+                database.CreateDetalheItem(detalhe);
+                //23
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerRegInstalacao, "PickerRegInstalacao");
+                database.CreateDetalheItem(detalhe);
+                //24
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerRegAcabamento, "PickerRegAcabamento");
+                database.CreateDetalheItem(detalhe);
+                //25
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerRegFixacao, "PickerRegFixacao");
+                database.CreateDetalheItem(detalhe);
+                //26
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNotaReg, "PickerNotaReg");
+                database.CreateDetalheItem(detalhe);
+                //27
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNivelRisco, "PickerNivelRisco");
+                database.CreateDetalheItem(detalhe);
+
+                /// Entry
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEntry(detalhe, EntryLocalizacao, "EntryLocalizacao");
+                database.CreateDetalheItem(detalhe);
+
+
+                //Editor
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEditor(detalhe, EditorComentarioBombaFixEle, "EditorComentarioBombaFixEle");
+                database.CreateDetalheItem(detalhe);
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEditor(detalhe, EditorComentarioBomba, "EditorComentarioBomba");
+                database.CreateDetalheItem(detalhe);
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEditor(detalhe, EditorComentarioTubulacao, "EditorComentarioTubulacao");
+                database.CreateDetalheItem(detalhe);
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEditor(detalhe, EditorComentarioRegistros, "EditorComentarioRegistros");
+                database.CreateDetalheItem(detalhe);
+
+                //LabelNotaFiscal
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloLabel(detalhe, txtNotaFinal, "txtNotaFinal");
+                database.CreateDetalheItem(detalhe);
+
+
+            }
+        }
+
+
         public void PickerSimpleChanged(object sender, EventArgs e)
         {
             this.ChangeForSave();
@@ -261,7 +511,6 @@ namespace Puma.Paginas
             this.editado = 'S';
             buttonAddSave.Text = "Salvar";
             buttonAddSave.Image = "arrow20.png";
-            this.editado = 'N';
         }
 
 
@@ -363,20 +612,27 @@ namespace Puma.Paginas
             if (this.editado == 'S')
             {
                 //Salvar
-
                 this.Save();
+                this.editado = 'N';
                 buttonAddSave.Text = "Adicionar";
                 buttonAddSave.Image = "plusIcon30.png";
             }
             else
             {
-                ContentPage barrilete = new HidraBarrilhete(this.carousel);
+                Puma.ModelosBanco.ItemSubItem subItem = new Puma.ModelosBanco.ItemSubItem();
+                subItem.RelatoriosId = this.itemSubItem.RelatoriosId;
+                subItem.Idsetor = this.itemSubItem.Idsetor;
+                subItem.Idsubitem = this.itemSubItem.Idsubitem;
+                subItem.Contador = this.itemSubItem.Contador + 1;
+
+                ContentPage barrilete = new HidraBarrilhete(this.carousel, subItem, database);
+                this.database.CreateItemSubItem(subItem);
                 this.carousel.Children.Add(barrilete);
                 this.carousel.CurrentPage = barrilete;
             }
 
         }
-        public void Save() { }
+
 
         public void CalculaNotaFinal()
         {

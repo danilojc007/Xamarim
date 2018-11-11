@@ -2,6 +2,8 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Puma.Paginas;
+using Puma.Banco;
+using Puma.ModelosBanco;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Puma
@@ -11,8 +13,21 @@ namespace Puma
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new PaginaInicialListaRelatorios());
-            //MainPage = new PaginaInicialListaRelatorios();
+            //AcessoBanco database = new AcessoBanco();
+            //database.
+
+            var myNav = new NavigationPage(new PaginaInicialListaRelatorios());
+            //myNav.Popped += (object sender, NavigationEventArgs e) =>
+            //{
+            //    var teste = myNav;
+            //    string nameTela = sender.GetType().GetProperty("CurrentPage").GetValue(sender, null).ToString();
+            //    if (nameTela == "Puma.Paginas.PaginaInicialListaRelatorios")
+            //    {
+            //        Puma.Paginas.PaginaInicialListaRelatorios pageListRela = (Puma.Paginas.PaginaInicialListaRelatorios)sender.GetType().GetProperty("CurrentPage").GetValue(sender, null);
+            //    }
+            //};
+
+            MainPage = myNav;
         }
 
         protected override void OnStart()

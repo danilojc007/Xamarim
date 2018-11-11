@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Puma.Modelo.ApiConnector.Model
+namespace Puma.Modelo.ApiConnector.Model.Reservatorio
 {
     public class Bombas
     {

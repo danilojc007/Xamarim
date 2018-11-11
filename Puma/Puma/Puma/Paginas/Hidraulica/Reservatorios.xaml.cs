@@ -35,11 +35,20 @@ namespace Puma.Paginas
         private List<ComboBox> nivelRisco = new List<ComboBox>();
         private char editado = 'N';
         private Manipulacao manipulacao = new Manipulacao();
-        private CarouselPage carousel = null;
-        public Reservatorios(CarouselPage carousel)
+        private CarroselSubItems carousel = null;
+
+        // parte do Banco
+        List<Puma.ModelosBanco.DetalhesItem> detalhesItem = null;
+        Puma.ModelosBanco.ItemSubItem itemSubItem = null;
+        Puma.Banco.AcessoBanco database = null;
+        public Reservatorios(CarroselSubItems carousel, Puma.ModelosBanco.ItemSubItem itemSubItem, Puma.Banco.AcessoBanco conexao)
         {
             InitializeComponent();
+            this.database = conexao;
+            this.itemSubItem = itemSubItem;
             this.carousel = carousel;
+
+
             simples.Add(new ComboBox(1, "Sim", "#008000"));
             simples.Add(new ComboBox(2, "Não", "#FF0000"));
             simples.Add(new ComboBox(3, "N/A", "#000000"));
@@ -175,9 +184,62 @@ namespace Puma.Paginas
             PickerNivelRisco.ItemsSource = nivelRisco;
             PickerNivelRisco.SelectedIndexChanged += this.PickerSimpleChanged;
 
-
+            this.CarregaDoBanco();
             this.CalculaNotaFinal();
 
+
+
+        }
+        public int GetContador()
+        {
+            return itemSubItem.Contador;
+        }
+        public Boolean GetEditado()
+        {
+            if (this.editado == 'S')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void CarregaDoBanco()
+        {
+            detalhesItem = database.GetDetalhesItems(this.itemSubItem);
+            //string teste = PickerNivelRisco.ToString();
+            //PickerNivelRisco.SelectedIndex = 1;
+            //var teste = this.FindByName<Picker>("PickerNivelRisco");
+            if (detalhesItem.Count != 0)
+            {
+                for (var i = 0; i < detalhesItem.Count; i++)
+                {
+                    if (detalhesItem[i].Tipo == "Picker")
+                    {
+                        this.FindByName<Picker>(detalhesItem[i].Name).SelectedIndex = detalhesItem[i].Index;
+                    }
+                    else
+                    {
+                        if (detalhesItem[i].Tipo == "Entry")
+                        {
+                            this.FindByName<Entry>(detalhesItem[i].Name).Text = detalhesItem[i].Text;
+                        }
+                        else
+                        {
+                            if (detalhesItem[i].Tipo == "Editor")
+                            {
+                                this.FindByName<Editor>(detalhesItem[i].Name).Text = detalhesItem[i].Text;
+                            }
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                this.editado = 'S';
+            }
         }
 
         public void PickerSimpleChanged(object sender, EventArgs e)
@@ -301,21 +363,43 @@ namespace Puma.Paginas
 
         public void PressSaveAdd(EventHandler press)
         {
-            if (this.editado == 'S')
-            {
-                //Salvar
-                this.Save();
-                buttonAddSave.Text = "Adicionar";
-                buttonAddSave.Image = "plusIcon30.png";
-                this.editado = 'N';
+            Grid.IGridList<View> testeLista = GridFotosPort.Children;
+            Image image = (Image)testeLista[0];
+            Xamarin.Forms.StreamImageSource source = (Xamarin.Forms.StreamImageSource)image.Source;
+            ImageSource opa = image.Source;
+            var e = opa.GetType().GetProperty("Stream").GetValue(opa, null);
 
-            }
-            else
-            {
-                ContentPage reservatorio = new Reservatorios(this.carousel);
-                this.carousel.Children.Add(reservatorio);
-                this.carousel.CurrentPage = reservatorio;
-            }
+            //string base64Image = "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";
+
+
+            //byte[] Base64Stream = Convert.FromBase64String(base64Image);
+            //System.IO.MemoryStream teste = new System.IO.MemoryStream(Base64Stream);
+
+            //byte[] b = Convert.ToBase64String(source.Stream);
+
+            //this.FindByName<Picker>(detalhesItem[i].Name).SelectedIndex
+            //if (this.editado == 'S')
+            //{
+            //    //Salvar
+            //    this.Save();
+            //    buttonAddSave.Text = "Adicionar";
+            //    buttonAddSave.Image = "plusIcon30.png";
+            //    this.editado = 'N';
+
+            //}
+            //else
+            //{
+            //    Puma.ModelosBanco.ItemSubItem subItem = new Puma.ModelosBanco.ItemSubItem();
+            //    subItem.RelatoriosId = this.itemSubItem.RelatoriosId;
+            //    subItem.Idsetor = this.itemSubItem.Idsetor;
+            //    subItem.Idsubitem = this.itemSubItem.Idsubitem;
+            //    subItem.Contador = this.itemSubItem.Contador + 1;
+
+            //    ContentPage reservatorio = new Reservatorios(this.carousel, subItem, database);
+            //    this.database.CreateItemSubItem(subItem);
+            //    this.carousel.Children.Add(reservatorio);
+            //    this.carousel.CurrentPage = reservatorio;
+            //}
 
         }
 
@@ -402,19 +486,163 @@ namespace Puma.Paginas
                 var file = await CrossMedia.Current.TakePhotoAsync(store);
                 if (file == null)
                     return;
-                //await DisplayAlert("File Path", file.Path, "Ok");
                 image.Source = ImageSource.FromStream(() => { return file.GetStream(); });
+                //var stream = file.GetStream();
+                //var bytes = new byte[stream.Length];
+                //await stream.ReadAsync(bytes, 0, (int)stream.Length);
+                //string base64 = System.Convert.ToBase64String(bytes);
+                //image.Source = base64;
                 grid.Children.Add(image, colum, row);
             }
 
         }
 
-        public async void Save()
+        public void Save()
         {
+            if (detalhesItem.Count != 0)
+            {
+                for (var i = 0; i < detalhesItem.Count; i++)
+                {
+                    if (detalhesItem[i].Tipo == "Picker")
+                    {
+                        //this.FindByName<Picker>(detalhesItem[i].Name).SelectedIndex = detalhesItem[i].Index;
+                        detalhesItem[i].Index = this.FindByName<Picker>(detalhesItem[i].Name).SelectedIndex;
+                    }
+                    else
+                    {
+                        if (detalhesItem[i].Tipo == "Entry")
+                        {
+                            detalhesItem[i].Text = this.FindByName<Entry>(detalhesItem[i].Name).Text;
+                        }
+                        else
+                        {
+                            if (detalhesItem[i].Tipo == "Editor")
+                            {
+                                detalhesItem[i].Text = this.FindByName<Editor>(detalhesItem[i].Name).Text;
+                            }
+                            else
+                            {
+                                if (detalhesItem[i].Tipo == "Label")
+                                {
+                                    detalhesItem[i].Text = this.FindByName<Label>(detalhesItem[i].Name).Text;
+                                }
 
+                            }
+                        }
+                    }
+
+                    database.UpdateDetalheItem(detalhesItem[i]);
+                }
+
+            }
+            else
+            {
+                //create
+                Puma.ModelosBanco.DetalhesItem detalhe = null;
+
+                //1
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNomenclatura, "PickerNomenclatura");
+                database.CreateDetalheItem(detalhe);
+                //2
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerAuditado, "PickerAuditado");
+                database.CreateDetalheItem(detalhe);
+                //3
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerPlanejado, "PickerPlanejado");
+                database.CreateDetalheItem(detalhe);
+                //4
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerExecutado, "PickerExecutado");
+                database.CreateDetalheItem(detalhe);
+                //5
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerApontamentos, "PickerApontamentos");
+                database.CreateDetalheItem(detalhe);
+                //6 -- 1 ° Nivel --
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerFechamento, "PickerFechamento");
+                database.CreateDetalheItem(detalhe);
+                //7
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerHermetico, "PickerHermetico");
+                database.CreateDetalheItem(detalhe);
+                //8
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerStatusGeral, "PickerStatusGeral");
+                database.CreateDetalheItem(detalhe);
+                //9
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNotaPortinhola, "PickerNotaPortinhola");
+                database.CreateDetalheItem(detalhe);
+                //10 -- 2° Nivel
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerTipoIper, "PickerTipoIper");
+                database.CreateDetalheItem(detalhe);
+                //11
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerEstruturaIper, "PickerEstruturaIper");
+                database.CreateDetalheItem(detalhe);
+                //12
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerStatusGeralIper, "PickerStatusGeralIper");
+                database.CreateDetalheItem(detalhe);
+                //13
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNotaIper, "PickerNotaIper");
+                database.CreateDetalheItem(detalhe);
+                //14 -- 3 ° Nivel ---
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerAguaLimp, "PickerAguaLimp");
+                database.CreateDetalheItem(detalhe);
+                //15
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerBoiaLimp, "PickerBoiaLimp");
+                database.CreateDetalheItem(detalhe);
+                //16
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerStatusGeralLimp, "PickerStatusGeralLimp");
+                database.CreateDetalheItem(detalhe);
+                //17
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNotaLimp, "PickerNotaLimp");
+                database.CreateDetalheItem(detalhe);
+
+                //51 -- Fim Nivel de Risco --
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNivelRisco, "PickerNivelRisco");
+                database.CreateDetalheItem(detalhe);
+
+                /// Entry
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEntry(detalhe, EntryLocalizacao, "EntryLocalizacao");
+                database.CreateDetalheItem(detalhe);
+
+
+                //Editor
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEditor(detalhe, EditorComentarioPort, "EditorComentarioPort");
+                database.CreateDetalheItem(detalhe);
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEditor(detalhe, EditorComentarioIper, "EditorComentarioIper");
+                database.CreateDetalheItem(detalhe);
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloEditor(detalhe, EditorComentarioLimp, "EditorComentarioLimp");
+                database.CreateDetalheItem(detalhe);
+
+                //LabelNotaFiscal
+
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                manipulacao.GeraModeloLabel(detalhe, txtNotaFinal, "txtNotaFinal");
+                database.CreateDetalheItem(detalhe);
+
+
+            }
         }
-
-
-
     }
 }

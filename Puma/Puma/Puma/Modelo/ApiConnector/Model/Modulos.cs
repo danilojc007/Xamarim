@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Puma.Modelo.ApiConnector.Model.Reservatorio;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

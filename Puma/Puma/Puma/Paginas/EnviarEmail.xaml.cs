@@ -10,6 +10,7 @@ using Puma.Modelo;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using Puma.Modelo.ApiConnector;
+using Puma.Service;
 
 namespace Puma.Paginas
 {
@@ -21,7 +22,6 @@ namespace Puma.Paginas
         public EnviarEmail()
         {
             emails = new ObservableCollection<Email>() { };
-            emails.Add(new Email("dj@hotmail.com"));
             InitializeComponent();
 
         }
@@ -44,11 +44,26 @@ namespace Puma.Paginas
         {
             HeaderRequisicao head = new HeaderRequisicao();
             MontaString montaString = new MontaString();
-            head = montaString.MontaSaida();
+            head = montaString.MontaSaida(emails);
+            apiConnector connector = new apiConnector();
+            this.IsEnabled = false;
+            BusyIndicator.IsRunning = true;
+            apiConnector.GenerateWord(head, this);
+
+            if (emails.Count > 0)
+            {
+                // cadastrar Emails
+            }
+
 
         }
 
-
+        public void ExibeMensagem(string header, string body)
+        {
+            this.IsEnabled = true;
+            BusyIndicator.IsRunning = false;
+            DisplayAlert(header, body, "ok");
+        }
         void OnDelete(object sender, EventArgs e)
         {
             emails.Remove((Email)sender.GetType().GetProperty("CommandParameter").GetValue(sender, null));

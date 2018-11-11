@@ -93,6 +93,7 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Banco\Caminho.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -153,6 +154,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.5.231</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -188,5 +192,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\mailsend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\puma.png" />
   </ItemGroup>
 </Project>

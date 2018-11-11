@@ -10,73 +10,60 @@ using Puma.Paginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Reflection;
-
+using Puma.Banco;
+using Puma.ModelosBanco;
+using Android.Telephony;
+using Android.OS;
+using Puma.ModelosBanco;
 
 namespace Puma.Paginas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaInicialListaRelatorios : ContentPage
     {
+        public string SerialNumber { get; }
         //public static ObservableCollection<string> items { get; set; }
-        public static ObservableCollection<RelatorioInicial> items { get; set; }
+        public static ObservableCollection<RelatorioInicial> items = new ObservableCollection<RelatorioInicial>() { };
+
+        public AcessoBanco database = new AcessoBanco();
         public PaginaInicialListaRelatorios()
         {
-            //items = new ObservableCollection<string>() { "Speaker", "Pen", "Lamp", "Monitor", "Bag", "Book", "Cap", "Tote", "Floss", "Phone" };
-
-            items = new ObservableCollection<RelatorioInicial>() { };
-
-            items.Add(new RelatorioInicial("Ct Jaraguá", "21/02/2018"));
-            items.Add(new RelatorioInicial("Ct Faria Lima", "19/06/2018"));
-            items.Add(new RelatorioInicial("Ct Jabaquara", "03/08/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-            items.Add(new RelatorioInicial("Ct Santo André", "10/09/2018"));
-
-
             InitializeComponent();
-            //this.Resources.Add(StyleSheet.FromAssemblyResource(
-            //IntrospectionExtensions.GetTypeInfo(typeof(PaginaInicialListaRelatorios)).Assembly,
-            //V));
+            this.AtualizaLista();
+        }
+        private void AtualizaLista()
+        {
+            //items = new ObservableCollection<RelatorioInicial>() { };
+            items.Clear();
+            List<Puma.ModelosBanco.Relatorios> list = database.GetRelatorios();
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (list[i].Ct == null)
+                {
+                    list[i].Ct = "Preencher Ct";
+                    database.UpdateRelatorio(list[i]);
+                }
+                items.Add(new RelatorioInicial(list[i].Id, list[i].Ct, list[i].Data, list[i].Gerente, list[i].Auditor, list[i].Endereco));
+            }
+            LabelTitulosRela.Text = "Relatórios(" + list.Count.ToString() + ")";
+
         }
         void OnSelection(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem == null)
-            {
-                return;
-            }
-            //DisplayAlert("Item Selected", e.SelectedItem.ToString(), "Ok");
         }
 
         void OnRefresh(object sender, EventArgs e)
         {
             var list = (ListView)sender;
-            ////put your refreshing logic here
-            //var itemList = items.Reverse().ToList();
-            //items.Clear();
-            //foreach (var s in itemList)
-            //{
-            //   items.Add(s);
-            //}
+            this.AtualizaLista();
             ////make sure to end the refresh state
             list.IsRefreshing = false;
         }
 
         void OnTap(object sender, ItemTappedEventArgs e)
         {
-            //RelatorioInicial rel = new RelatorioInicial( e.Item.ToString());
-            //DisplayAlert("Item Tapped", e.Item.ToString(), "Ok");
-            //DisplayAlert("Item Tapped", e.Item.ToString(), "Ok");
-
-            Navigation.PushAsync(new PaginaRelatorio());
-            //App.Current.MainPage = new NavigationPage(new PaginaRelatorio());
+            RelatorioInicial selectedItem = (RelatorioInicial)sender.GetType().GetProperty("SelectedItem").GetValue(sender, null);
+            Navigation.PushAsync(new PaginaRelatorio(selectedItem.Id, database));
         }
 
         void OnMore(object sender, EventArgs e)
@@ -87,9 +74,21 @@ namespace Puma.Paginas
 
         void OnDelete(object sender, EventArgs e)
         {
-            var item = (MenuItem)sender;
-            //items.Remove(item.CommandParameter.ToString());
-            //items.Remove(item.CommandParameter);
+            RelatorioInicial selectedItem = (RelatorioInicial)sender.GetType().GetProperty("CommandParameter").GetValue(sender, null);
+            Puma.ModelosBanco.Relatorios relatorio = database.GetRelatorio(selectedItem.Id);
+            database.DeleteRelatorio(relatorio);
+            this.AtualizaLista();
+        }
+        public void PressCriarRelatorio(object sender, EventArgs r)
+        {
+            Puma.ModelosBanco.Relatorios relatorio = new Puma.ModelosBanco.Relatorios();
+            database.CriarRelatorio(relatorio);
+            Navigation.PushAsync(new PaginaRelatorio(relatorio.Id, database));
+        }
+        protected override void OnAppearing()
+        {
+            this.AtualizaLista();
+            base.OnAppearing();
         }
     }
 }

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Puma.Modelo.ApiConnector.Model;
 using Puma.Modelo;
+using Puma.Modelo.ApiConnector.Model.Reservatorio;
+using System.Collections.ObjectModel;
 
 namespace Puma.Modelo.ApiConnector
 {
     public class MontaString
     {
+        // Instalações Hidraulicas
         public List<Reservatorio> reservatorios = new List<Reservatorio>();
         public List<Barrilete> barrilete = new List<Barrilete>();
         public List<Bombas> bombas = new List<Bombas>();
@@ -17,15 +20,18 @@ namespace Puma.Modelo.ApiConnector
         public HeaderRequisicao header = new HeaderRequisicao();
 
 
-        public HeaderRequisicao MontaSaida()
-        {
 
+        public HeaderRequisicao MontaSaida(ObservableCollection<Email> emails)
+        {
+            //CAbeçalho
             header.localRelatorio = "CT Paulista";
             header.dataRelatorio = "15/10/2018";
             header.gerente = "Ana Maria Rodrigues";
             header.auditor = "Gilmar Silva Santos";
             header.macAddress = "XXXXXXXXX";
             header.modulos = new Modulos();
+
+            //Instalações Hidraulicas
             header.modulos.instHidraulicas = new InstHidraulicas();
             header.modulos.instHidraulicas.reservatorio = this.MontaReservatorio();
             header.modulos.instHidraulicas.barrilete = this.MontaBarrilete();
@@ -33,7 +39,10 @@ namespace Puma.Modelo.ApiConnector
             header.modulos.instHidraulicas.tubulacoes = this.MontaTubulacoes();
             header.modulos.instHidraulicas.bombas = this.MontaBomba();
             header.modulos.instHidraulicas.redeGas = this.MontaRedeGas();
-            header.emails = this.MontaEmails();
+
+            //Emails
+            //header.emails = this.MontaEmails();
+            header.emails = emails;
 
             return header;
         }

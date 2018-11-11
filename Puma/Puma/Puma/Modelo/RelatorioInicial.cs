@@ -6,13 +6,25 @@ namespace Puma.Modelo
 {
     public class RelatorioInicial
     {
-        public string Nome { get; set; }
+        public int Id { get; set; }
+        public string Ct { get; set; }
         public string Data { get; set; }
+        public string Gerente { get; set; }
+        public string Auditor { get; set; }
+        public string Endereco { get; set; }
 
-        public RelatorioInicial(string Nome, string Data)
+        public RelatorioInicial(int Id)
         {
-            this.Nome = Nome;
+            this.Id = Id;
+        }
+        public RelatorioInicial(int Id, string Ct, string Data, string Gerente, string Auditor, string Endereco)
+        {
+            this.Id = Id;
+            this.Ct = Ct;
             this.Data = Data;
+            this.Gerente = Gerente;
+            this.Auditor = Auditor;
+            this.Endereco = Endereco;
         }
     }
 }

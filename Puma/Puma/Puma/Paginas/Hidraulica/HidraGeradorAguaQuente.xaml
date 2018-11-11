@@ -158,7 +158,7 @@
                         </Grid>
 
                         <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                        <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                        <Editor x:Name="EditorComentarioBoiler" HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                         <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                             <Grid.ColumnDefinitions>
@@ -254,7 +254,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                            <Editor x:Name="EditorComentarioAquePass" HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -342,7 +342,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+                            <Editor  x:Name="EditorComentarioBombaCalor" Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -429,7 +429,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+                            <Editor x:Name="EditorComentarioPlacaSolar"  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -529,7 +529,7 @@
                         </Grid>
 
                         <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                        <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                        <Editor x:Name="EditorComentarioBomba" HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                         <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                             <Grid.ColumnDefinitions>
@@ -625,7 +625,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                            <Editor x:Name="EditorComentarioBfe" HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -717,7 +717,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+                            <Editor  x:Name="EditorComentarioTub" Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -806,7 +806,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+                            <Editor  x:Name="EditorComentarioReg" Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>

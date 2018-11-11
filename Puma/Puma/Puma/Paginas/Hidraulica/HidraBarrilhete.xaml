@@ -29,7 +29,7 @@
                             <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerNomenclatura" Title="Nomenclatura" VerticalOptions="Center" 
                             HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
                             <Label  Grid.Column="0" Grid.Row="1" Text="Local:" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Entry Grid.Column="1" Grid.Row="1" Placeholder="Localização" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="FillAndExpand"></Entry>
+                            <Entry x:Name="EntryLocalizacao" Grid.Column="1" Grid.Row="1" Placeholder="Localização" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="FillAndExpand"></Entry>
                         </Grid>
                     </StackLayout>
                     <BoxView HeightRequest="1" Margin="0, -2, 0, 0" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"></BoxView>
@@ -147,7 +147,7 @@
                         </Grid>
 
                         <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                        <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                        <Editor x:Name="EditorComentarioBomba" HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                         <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                             <Grid.ColumnDefinitions>
@@ -243,7 +243,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
+                            <Editor x:Name="EditorComentarioBombaFixEle" HeightRequest="50" Margin="10, 0, 10, 0" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -335,7 +335,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+                            <Editor  x:Name="EditorComentarioTubulacao" Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -424,7 +424,7 @@
                             </Grid>
 
                             <Label Text="Cometários:" Margin="10, 0, 10, 0" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                            <Editor  Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
+                            <Editor  x:Name="EditorComentarioRegistros" Margin="10, 0, 10, 0" HeightRequest="50" FontSize="Small"></Editor>
 
                             <Grid RowSpacing="-10"  Margin="10, 0, 10, 0">
                                 <Grid.ColumnDefinitions>
@@ -459,7 +459,7 @@
                         <Label  Grid.Column="1" Grid.Row="0" x:Name="txtNotaFinal" VerticalTextAlignment="Center" XAlign="Center" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
 
                         <Label Grid.Column="0" Grid.Row="1" Text="Nivel de Risco:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                        <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerNivelRisco" Title="Nivel de Risco"  VerticalOptions="Center"
+                        <Picker Grid.Column="1" Grid.Row="1" x:Name="PickerNivelRisco"  Title="Nivel de Risco"  VerticalOptions="Center"
                             HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
                     </Grid>
 
