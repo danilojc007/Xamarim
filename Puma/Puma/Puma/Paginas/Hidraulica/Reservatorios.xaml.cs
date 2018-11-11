@@ -648,6 +648,10 @@ namespace Puma.Paginas
                 detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
                 detalhe = manipulacao.GeraModeloPicker(detalhe, PickerNomenclatura, "PickerNomenclatura");
                 database.CreateDetalheItem(detalhe);
+                //1.1
+                detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
+                detalhe = manipulacao.GeraModeloPicker(detalhe, PickerTipo, "PickerTipo");
+                database.CreateDetalheItem(detalhe);
                 //2
                 detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
                 detalhe = manipulacao.GeraModeloPicker(detalhe, PickerAuditado, "PickerAuditado");

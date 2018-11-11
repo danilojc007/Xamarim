@@ -118,7 +118,7 @@ namespace Puma.Banco
         }
         public void UpdateDetalheItem(DetalhesItem item)
         {
-            _conexao.Insert(item);
+            _conexao.Update(item);
         }
 
         public List<FotosItem> GetFotosItems(ItemSubItem itemSub)

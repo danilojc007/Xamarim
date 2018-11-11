@@ -344,19 +344,24 @@ namespace Puma.Paginas
         }
         public void SavePictures()
         {
-            this.SavePictures();
             for (var i = 0; i < FotosItem.Count; i++)
             {
+
                 if (database.GetFotoItem(FotosItem[i]) == null)
                 {
                     //create
                     database.CreateFotosItem(FotosItem[i]);
                 }
             }
+            for (var o = 0; o < DeleteFotosItem.Count; o++)
+            {
+                database.DeleteFotosItem(DeleteFotosItem[o]);
+            }
         }
 
         public void Save()
         {
+            this.SavePictures();
             if (detalhesItem.Count != 0)
             {
                 for (var i = 0; i < detalhesItem.Count; i++)

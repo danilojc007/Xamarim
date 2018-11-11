@@ -24,12 +24,10 @@ namespace Puma.Service
         public static void GenerateWord(HeaderRequisicao requisicao, EnviarEmail email)
         {
             Email = email;
-            Uri enderecoURL = new Uri("http://104.155.141.179:4321/generateWord");
+            Uri enderecoURL = new Uri("http://35.204.155.170:4321/generateWord");
             WebClient client = new WebClient();
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
             string body = JsonConvert.SerializeObject(requisicao);
-            //<HeaderRequisicao>(requisicao);
             client.UploadStringCompleted += new UploadStringCompletedEventHandler(UploadCompleted);
             client.UploadStringAsync(enderecoURL, "POST", body);
 

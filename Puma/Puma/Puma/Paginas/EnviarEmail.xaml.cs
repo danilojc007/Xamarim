@@ -40,12 +40,12 @@ namespace Puma.Paginas
 
         public void PressEnviarEmail(object sender, EventArgs r)
         {
+            this.IsEnabled = false;
+            BusyIndicator.IsRunning = true;
             HeaderRequisicao head = new HeaderRequisicao();
             MontaString montaString = new MontaString();
             head = montaString.MontaSaida(emails, relatorio);
             apiConnector connector = new apiConnector();
-            this.IsEnabled = false;
-            BusyIndicator.IsRunning = true;
             apiConnector.GenerateWord(head, this);
 
             if (emails.Count > 0)
@@ -90,6 +90,7 @@ namespace Puma.Paginas
                         email.Email = EntryEmail.Text;
                         database.CadastroEmail(email);
                         emails.Add(new Email(EntryEmail.Text));
+                        EntryEmail.Text = "";
                     }
                     else
                     {

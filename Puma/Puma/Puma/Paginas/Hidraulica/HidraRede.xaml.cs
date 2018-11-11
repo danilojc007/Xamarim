@@ -428,18 +428,23 @@ namespace Puma.Paginas.Hidraulica
         }
         public void SavePictures()
         {
-            this.SavePictures();
             for (var i = 0; i < FotosItem.Count; i++)
             {
+
                 if (database.GetFotoItem(FotosItem[i]) == null)
                 {
                     //create
                     database.CreateFotosItem(FotosItem[i]);
                 }
             }
+            for (var o = 0; o < DeleteFotosItem.Count; o++)
+            {
+                database.DeleteFotosItem(DeleteFotosItem[o]);
+            }
         }
         public void Save()
         {
+            this.SavePictures();
             if (detalhesItem.Count != 0)
             {
                 for (var i = 0; i < detalhesItem.Count; i++)
@@ -529,7 +534,7 @@ namespace Puma.Paginas.Hidraulica
                 //12
                 detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
                 detalhe = manipulacao.GeraModeloPicker(detalhe, PickerRegAcabamento, "PickerRegAcabamento");
-
+                database.CreateDetalheItem(detalhe);
                 //13
                 detalhe = this.manipulacao.CretaeBaseDetalhe(this.itemSubItem);
                 detalhe = manipulacao.GeraModeloPicker(detalhe, PickerRegFixacao, "PickerRegFixacao");

@@ -302,7 +302,7 @@
             HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
 
                                 <Label Grid.Column="0" Grid.Row="2" Text="Vazamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>
-                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerBombaCalorVazamento" Title="Vazamento" VerticalOptions="Center"
+                                <Picker Grid.Column="1" Grid.Row="2" x:Name="PickerBombaCalorVazamento" Title="FIxação" VerticalOptions="Center"
             HorizontalOptions="FillAndExpand" FontSize="Small" SelectedIndexChanged="PickerSimpleChanged"></Picker>
                             </Grid>
                             <Grid RowSpacing="-10"  Margin="10, -7, 10, -7">
