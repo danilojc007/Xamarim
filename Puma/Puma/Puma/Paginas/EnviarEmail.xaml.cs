@@ -18,25 +18,23 @@ namespace Puma.Paginas
     public partial class EnviarEmail : ContentPage
     {
         public static ObservableCollection<Email> emails { get; set; }
+        public List<Puma.ModelosBanco.Emails> emailsBanco = new List<ModelosBanco.Emails>();
+        public Banco.AcessoBanco database = new Banco.AcessoBanco();
+        public Puma.ModelosBanco.Relatorios relatorio = null;
 
-        public EnviarEmail()
+        public EnviarEmail(Puma.ModelosBanco.Relatorios relatorio)
         {
+            this.relatorio = relatorio;
             emails = new ObservableCollection<Email>() { };
             InitializeComponent();
+            this.AtualizaLista();
 
         }
 
         void OnRefresh(object sender, EventArgs e)
         {
             var list = (ListView)sender;
-            ////put your refreshing logic here
-            //var itemList = items.Reverse().ToList();
-            //items.Clear();
-            //foreach (var s in itemList)
-            //{
-            //   items.Add(s);
-            //}
-            ////make sure to end the refresh state
+            this.AtualizaLista();
             list.IsRefreshing = false;
         }
 
@@ -44,7 +42,7 @@ namespace Puma.Paginas
         {
             HeaderRequisicao head = new HeaderRequisicao();
             MontaString montaString = new MontaString();
-            head = montaString.MontaSaida(emails);
+            head = montaString.MontaSaida(emails, relatorio);
             apiConnector connector = new apiConnector();
             this.IsEnabled = false;
             BusyIndicator.IsRunning = true;
@@ -88,7 +86,9 @@ namespace Puma.Paginas
                     }
                     if (i == 0)
                     {
-
+                        Puma.ModelosBanco.Emails email = new Puma.ModelosBanco.Emails();
+                        email.Email = EntryEmail.Text;
+                        database.CadastroEmail(email);
                         emails.Add(new Email(EntryEmail.Text));
                     }
                     else
@@ -105,6 +105,20 @@ namespace Puma.Paginas
             {
                 DisplayAlert("Insira um e-mail", "", "ok");
             }
+        }
+        private void AtualizaLista()
+        {
+            emailsBanco = database.GetEmails();
+            emails.Clear();
+            for (var i = 0; i < emailsBanco.Count; i++)
+            {
+                emails.Add(new Email(emailsBanco[i].Email));
+            }
+        }
+        protected override void OnAppearing()
+        {
+            this.AtualizaLista();
+            base.OnAppearing();
         }
 
     }

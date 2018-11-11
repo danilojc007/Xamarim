@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.ToString();
 using Puma.Modelo.ApiConnector.Model;
 using Puma.Modelo;
 using Puma.Modelo.ApiConnector.Model.Reservatorio;
@@ -18,16 +18,22 @@ namespace Puma.Modelo.ApiConnector
         public List<RedeGas> redeGas = new List<RedeGas>();
         public List<Tubulacoes> tubulacoes = new List<Tubulacoes>();
         public HeaderRequisicao header = new HeaderRequisicao();
+        public ObservableCollection<Email> emails = new ObservableCollection<Email>();
+        public Puma.Banco.AcessoBanco database = new Puma.Banco.AcessoBanco();
+        Puma.ModelosBanco.Relatorios relatorio = null;
 
 
 
-        public HeaderRequisicao MontaSaida(ObservableCollection<Email> emails)
+        public HeaderRequisicao MontaSaida(ObservableCollection<Email> emails, Puma.ModelosBanco.Relatorios relatorio)
         {
             //CAbeçalho
-            header.localRelatorio = "CT Paulista";
-            header.dataRelatorio = "15/10/2018";
-            header.gerente = "Ana Maria Rodrigues";
-            header.auditor = "Gilmar Silva Santos";
+            this.emails = emails;
+            this.relatorio = relatorio;
+            header.localRelatorio = relatorio.Ct;
+            header.dataRelatorio = relatorio.Data;
+            header.gerente = relatorio.Gerente;
+            header.auditor = relatorio.Auditor;
+            header.endereco = relatorio.Endereco;
             header.macAddress = "XXXXXXXXX";
             header.modulos = new Modulos();
 
@@ -49,324 +55,845 @@ namespace Puma.Modelo.ApiConnector
         public List<Email> MontaEmails()
         {
             List<Email> list = new List<Email>();
-            list.Add(new Email("danilojc007@gmail.com"));
+            //list.Add(new Email("danilojc007@gmail.com"));
+            for (var i = 0; i < this.emails.Count; i++)
+            {
+                list.Add(new Email(this.emails[i].email));
+            }
             return list;
         }
         public List<Barrilete> MontaBarrilete()
         {
             List<Barrilete> list = new List<Barrilete>();
 
-            list.Add(this.CriarBarrilete());
-
+            Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 2);
+            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+            for (var i = 0; i < itemSubItems.Count; i++)
+            {
+                // id = 1
+                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                list.Add(this.CriarBarrilete(detalhes, fotos));
+            }
             return list;
 
         }
-        public Barrilete CriarBarrilete()
+        public Barrilete CriarBarrilete(List<Puma.ModelosBanco.DetalhesItem> detalhes, List<Puma.ModelosBanco.FotosItem> fotos)
         {
             Barrilete barrilete = new Barrilete();
-            barrilete.nomeclatura = "Incêndio";
-            barrilete.localizacao = "Pavimento Térreo";
-            barrilete.itemAuditado = "Não";
-            barrilete.planejado = "Sim";
-            barrilete.executado = "Não";
-            barrilete.apontamentos = "Não";
-            barrilete.bombRolamento = "Com vibrações";
-            barrilete.bombAcoplamento = "OK";
-            barrilete.bombSeloMecanico = "Irregular";
-            barrilete.bombAquecimento = "Sim";
-            barrilete.bombPintura = "Oxidada";
-            barrilete.bombStatusGeral = "OK";
-            barrilete.bombFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-            barrilete.bombComentario = "Bomba está totalmente danificada";
-            barrilete.bombNota = "35%";
-            barrilete.bfelFixacao = "OK";
-            barrilete.bfelVibraStop = "Irregular";
-            barrilete.bfelInstalacaoEletrica = "Irregular";
-            barrilete.bfelStatusGeral = "Com Corrosão";
-            barrilete.bfelFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-            barrilete.bfelComentario = "Bomba com aquecimento e oxidada";
-            barrilete.bfelNota = "35%";
-            barrilete.tubuMaterial = "Aço Carbono";
-            barrilete.tubuAcabamento = "Envelopada";
-            barrilete.tubuVazamento = "Não";
-            barrilete.tubuFixacao = "NA";
-            barrilete.tubuFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
 
-            barrilete.tubuComentario = "Oxidação avançada nas tubulações";
-            barrilete.tubuNota = "75%";
-            barrilete.regiInstalacao = "OK";
-            barrilete.regiAcabamento = "Irregular";
-            barrilete.regiFixacao = "Irregular";
-            barrilete.regiFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+            for (var i = 0; i < detalhes.Count; i++)
+            {
+                switch (detalhes[i].Name)
+                {
+                    case "PickerNomenclatura":
+                        barrilete.nomeclatura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAuditado":
+                        barrilete.itemAuditado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlanejado":
+                        barrilete.planejado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerExecutado":
+                        barrilete.executado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerApontamentos":
+                        barrilete.apontamentos = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRolamentos":
+                        barrilete.bombRolamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAcoplamento":
+                        barrilete.bombAcoplamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerSeloMecanico":
+                        barrilete.bombSeloMecanico = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaAquecimento":
+                        barrilete.bombAquecimento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaPintura":
+                        barrilete.bombPintura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaStatusGeral":
+                        barrilete.bombStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaBomba":
+                        barrilete.bombNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeFixacao":
+                        barrilete.bfelFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeVibStop":
+                        barrilete.bfelVibraStop = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeInstaEletrica":
+                        barrilete.bfelInstalacaoEletrica = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeStatusGeral":
+                        barrilete.bfelStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaBfe":
+                        barrilete.bfelNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubMaterial":
+                        barrilete.tubuMaterial = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubAcabamento":
+                        barrilete.tubuAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubVazamento":
+                        barrilete.tubuVazamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubFixacao":
+                        barrilete.tubuFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaTub":
+                        barrilete.tubuNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegInstalacao":
+                        barrilete.regiInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegAcabamento":
+                        barrilete.regiAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegFixacao":
+                        barrilete.regiFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaReg":
+                        barrilete.regiNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNivelRisco":
+                        barrilete.nivelRisco = detalhes[i].Text.ToString();
+                        break;
+                    case "EntryLocalizacao":
+                        barrilete.localizacao = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioBombaFixEle":
+                        barrilete.bfelComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioBomba":
+                        barrilete.bombComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioTubulacao":
+                        barrilete.tubuComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioRegistros":
+                        barrilete.regiComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "txtNotaFinal":
+                        barrilete.notaFinal = detalhes[i].Text.ToString();
+                        break;
 
-            barrilete.regiComentario = "As fixações precisam de uma pintura geral";
-            barrilete.regiNota = "75%";
-            barrilete.notaFinal = "47%";
-            barrilete.nivelRisco = "MEDIO";
+                }
+            }
+
+            for (var o = 0; o < fotos.Count; o++)
+            {
+                switch (fotos[o].Name)
+                {
+                    case "GridFotosBomba":
+                        barrilete.bombFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosBfe":
+                        barrilete.bfelFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosTub":
+                        barrilete.tubuFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosReg":
+                        barrilete.regiFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                }
+
+            }
             return barrilete;
         }
         public List<Reservatorio> MontaReservatorio()
         {
             List<Reservatorio> list = new List<Reservatorio>();
 
-
-            list.Add(this.CriaReservatorio());
-
-
+            Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 1);
+            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+            for (var i = 0; i < itemSubItems.Count; i++)
+            {
+                // id = 1
+                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                list.Add(this.CriaReservatorio(detalhes, fotos));
+            }
             return list;
         }
-        public Reservatorio CriaReservatorio()
+        public Reservatorio CriaReservatorio(List<Puma.ModelosBanco.DetalhesItem> detalhes, List<Puma.ModelosBanco.FotosItem> fotos)
         {
             Reservatorio reservatorio = new Reservatorio();
 
-            reservatorio.nomeclatura = "Incêndio";
-            reservatorio.tipo = "Polietileno";
-            reservatorio.localizacao = "Pavimento Térreo";
-            reservatorio.itemAuditado = "Não";
-            reservatorio.planejado = "Sim";
-            reservatorio.executado = "NA";
-            reservatorio.apontamentos = "Não";
-            reservatorio.portFechamento = "Cadeado";
-            reservatorio.portHermetico = "Sim";
-            reservatorio.portStatusGeral = "Danificada";
-            reservatorio.portFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-            reservatorio.portComentario = "A portinhola está completamente corroída e necessita ser trocada.";
-            reservatorio.portNota = "75%";
-            reservatorio.impTipo = "Asfáltica";
-            reservatorio.impEstrutura = "Pontos aparente";
-            reservatorio.impStatusGeral = "Soltando";
-            reservatorio.impFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-            reservatorio.impComentario = "A impermeabilização asfásltica está sem a proteção mecânica (fora das normas).";
-            reservatorio.impNota = "35%";
-            reservatorio.limpAgua = "LIMPA";
-            reservatorio.limpBoiaNivel = "OK";
-            reservatorio.limpStatusGeral = "OK";
-            reservatorio.limpFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-            reservatorio.limpComentario = "A água da está suja";
-            reservatorio.limpNota = "100%";
-            reservatorio.notaFinal = "47%";
-            reservatorio.nivelRisco = "MEDIO";
+            for (var i = 0; i < detalhes.Count; i++)
+            {
+                switch (detalhes[i].Name)
+                {
+                    case "PickerNomenclatura":
+                        reservatorio.nomeclatura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAuditado":
+                        reservatorio.itemAuditado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlanejado":
+                        reservatorio.planejado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerExecutado":
+                        reservatorio.executado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerApontamentos":
+                        reservatorio.apontamentos = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerFechamento":
+                        reservatorio.portFechamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerHermetico":
+                        reservatorio.portHermetico = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerStatusGeral":
+                        reservatorio.portStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaPortinhola":
+                        reservatorio.portNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTipoIper":
+                        reservatorio.impTipo = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerEstruturaIper":
+                        reservatorio.impEstrutura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerStatusGeralIper":
+                        reservatorio.impStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaIper":
+                        reservatorio.impNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAguaLimp":
+                        reservatorio.limpAgua = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoiaLimp":
+                        reservatorio.limpBoiaNivel = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerStatusGeralLimp":
+                        reservatorio.limpStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaLimp":
+                        reservatorio.limpNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNivelRisco":
+                        reservatorio.nivelRisco = detalhes[i].Text.ToString();
+                        break;
+                    case "EntryLocalizacao":
+                        reservatorio.localizacao = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioPort":
+                        reservatorio.portComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioIper":
+                        reservatorio.impComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioLimp":
+                        reservatorio.limpComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "txtNotaFinal":
+                        reservatorio.notaFinal = detalhes[i].Text.ToString();
+                        break;
+
+                }
+
+            }
+
+            for (var o = 0; o < fotos.Count; o++)
+            {
+                switch (fotos[o].Name)
+                {
+                    case "GridFotosLimp":
+                        reservatorio.limpFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosIper":
+                        reservatorio.impFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosPort":
+                        reservatorio.portFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                }
+
+            }
+
             return reservatorio;
         }
 
         public List<Bombas> MontaBomba()
         {
             List<Bombas> list = new List<Bombas>();
-
-
-            list.Add(this.CriarBomba());
+            Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 5);
+            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+            for (var i = 0; i < itemSubItems.Count; i++)
+            {
+                // id = 6
+                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                list.Add(this.CriarBomba(detalhes, fotos));
+            }
 
 
             return list;
         }
-        public Bombas CriarBomba()
+        public Bombas CriarBomba(List<Puma.ModelosBanco.DetalhesItem> detalhes, List<Puma.ModelosBanco.FotosItem> fotos)
         {
-            Bombas boomba = new Bombas();
+            Bombas gerador = new Bombas();
+            for (var i = 0; i < detalhes.Count; i++)
+            {
+                switch (detalhes[i].Name)
+                {
+                    case "PickerNomenclatura":
+                        gerador.nomeclatura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAuditado":
+                        gerador.itemAuditado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlanejado":
+                        gerador.planejado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerExecutado":
+                        gerador.executado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaRolamentos":
+                        gerador.bombRolamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaAcoplamento":
+                        gerador.bombAcoplamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaSeloMecanico":
+                        gerador.bombSeloMecanico = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaAquecimento":
+                        gerador.bombAquecimento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaPintura":
+                        gerador.bombPintura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaStatusGeral":
+                        gerador.bombStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaBomba":
+                        gerador.bombNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeFixacao":
+                        gerador.bfelFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeVibStop":
+                        gerador.bfelVibraStop = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeInstaEletrica":
+                        gerador.bfelInstalacaoEletrica = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeStatusGeral":
+                        gerador.bfelStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaBfe":
+                        gerador.bfelNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNivelRisco":
+                        gerador.nivelRisco = detalhes[i].Text.ToString();
+                        break;
+                    case "EntryLocalizacao":
+                        gerador.localizacao = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioBfe":
+                        gerador.bfelComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "txtNotaFinal":
+                        gerador.notaFinal = detalhes[i].Text.ToString();
+                        break;
 
-            boomba.nomeclatura = "Incêndio";
-            boomba.localizacao = "Pavimento Térreo";
-            boomba.itemAuditado = "Não";
-            boomba.planejado = "Sim";
-            boomba.executado = "NA";
-            boomba.apontamentos = "Não";
-            boomba.bombRolamento = "Com vibrações";
-            boomba.bombAcoplamento = "OK";
-            boomba.bombSeloMecanico = "Irregular";
-            boomba.bombAquecimento = "Sim";
-            boomba.bombPintura = "Oxidada";
-            boomba.bombStatusGeral = "OK";
-            boomba.bombFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+                }
+            }
 
-            boomba.bombComentario = "Bomba está totalmente danificada";
-            boomba.bombNota = "35%";
-            boomba.bfelFixacao = "OK";
-            boomba.bfelVibraStop = "Irregular";
-            boomba.bfelInstalacaoEletrica = "Irregular";
-            boomba.bfelStatusGeral = "Com Corrosão";
-            boomba.bfelFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+            for (var o = 0; o < fotos.Count; o++)
+            {
+                switch (fotos[o].Name)
+                {
+                    case "GridFotosBomba":
+                        gerador.bombFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosBfe":
+                        gerador.bfelFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                }
 
-            boomba.bfelComentario = "Bomba com aquecimento e oxidada";
-            boomba.bfelNota = "35%";
-            boomba.notaFinal = "47%";
-            boomba.nivelRisco = "MEDIO";
-
-
-
-            return boomba;
+            }
+            return gerador;
         }
         public List<RedeGas> MontaRedeGas()
         {
             List<RedeGas> list = new List<RedeGas>();
-            list.Add(this.CriaRedeGas());
+            Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 6);
+            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+            for (var i = 0; i < itemSubItems.Count; i++)
+            {
+                // id = 6
+                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                list.Add(this.CriaRedeGas(detalhes, fotos));
+            }
             return list;
         }
 
-        public RedeGas CriaRedeGas()
+        public RedeGas CriaRedeGas(List<Puma.ModelosBanco.DetalhesItem> detalhes, List<Puma.ModelosBanco.FotosItem> fotos)
         {
-            RedeGas rede = new RedeGas();
+            RedeGas gerador = new RedeGas();
 
-            rede.nomeclatura = "Incêndio";
-            rede.alimentacao = "Pavimento Térreo";
-            rede.itemAuditado = "Não";
-            rede.planejado = "Sim";
-            rede.executado = "NA";
-            rede.apontamentos = "Não";
-            rede.tubuMaterial = "Aço Carbono";
-            rede.tubuAcabamento = "Envelopada";
-            rede.tubuVazamento = "Não";
-            rede.tubuFixacao = "NA";
-            rede.tubuFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+            for (var i = 0; i < detalhes.Count; i++)
+            {
+                switch (detalhes[i].Name)
+                {
+                    case "PickerNomenclatura":
+                        gerador.nomeclatura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAlimentacao":
+                        gerador.alimentacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAuditado":
+                        gerador.itemAuditado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlanejado":
+                        gerador.planejado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerExecutado":
+                        gerador.executado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubMaterial":
+                        gerador.tubuMaterial = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubAcabamento":
+                        gerador.tubuAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubVazamento":
+                        gerador.tubuVazamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubFixacao":
+                        gerador.tubuFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaTub":
+                        gerador.tubuNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegInstalacao":
+                        gerador.regiInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegAcabamento":
+                        gerador.regiAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegFixacao":
+                        gerador.regiFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaReg":
+                        gerador.regiNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerCentralSistema":
+                        gerador.gasSistema = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerCentralTanques":
+                        gerador.gasTanques = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerCentralDetectorGas":
+                        gerador.gasDetectorGas = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerCentralExtintores":
+                        gerador.gasExtintores = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerCentralLocal":
+                        gerador.gasLocalInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaCentral":
+                        gerador.gasNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNivelRisco":
+                        gerador.nivelRisco = detalhes[i].Text.ToString();
+                        break;
+                    case "EntryLocalizacao":
+                        gerador.gasLocalInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioTub":
+                        gerador.tubuComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioReg":
+                        gerador.regiComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioCentral":
+                        gerador.gasComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "txtNotaFinal":
+                        gerador.notaFinal = detalhes[i].Text.ToString();
+                        break;
 
-            rede.tubuComentario = "Oxidação avançada nas tubulações";
-            rede.tubuNota = "75%";
-            rede.regiInstalacao = "OK";
-            rede.regiAcabamento = "Irregular";
-            rede.regiFixacao = "Irregular";
-            rede.regiFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+                }
+            }
 
-            rede.regiComentario = "As fixações precisam de uma pintura geral";
-            rede.regiNota = "75%";
-            rede.gasSistema = "Gás Natural";
-            rede.gasTanques = "Corrosão";
-            rede.gasDetectorGas = "OK";
-            rede.gasExtintores = "Não tem";
-            rede.gasLocalInstalacao = "OK";
-            rede.gasFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+            for (var o = 0; o < fotos.Count; o++)
+            {
+                switch (fotos[o].Name)
+                {
+                    case "GridFotosTub":
+                        gerador.tubuFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosReg":
+                        gerador.regiFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosCentral":
+                        gerador.gasFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                }
 
-            rede.gasComentario = "As fixações precisam de uma pintura geral";
-            rede.gasNota = "75%";
-            rede.notaFinal = "47%";
-            rede.nivelRisco = "MEDIO";
+            }
 
-
-            return rede;
+            return gerador;
         }
         public List<Tubulacoes> MontaTubulacoes()
         {
             List<Tubulacoes> list = new List<Tubulacoes>();
 
-            list.Add(this.CriarTubulacao());
+            Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 4);
+            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+            for (var i = 0; i < itemSubItems.Count; i++)
+            {
+                // id = 3
+                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                list.Add(this.CriarTubulacao(detalhes, fotos));
+            }
             return list;
         }
-        public Tubulacoes CriarTubulacao()
+        public Tubulacoes CriarTubulacao(List<Puma.ModelosBanco.DetalhesItem> detalhes, List<Puma.ModelosBanco.FotosItem> fotos)
         {
-            Tubulacoes tub = new Tubulacoes();
+            Tubulacoes gerador = new Tubulacoes();
 
-            tub.nomeclatura = "Incêndio";
-            tub.alimentacao = "Pavimento Térreo";
-            tub.itemAuditado = "Não";
-            tub.planejado = "Sim";
-            tub.executado = "NA";
-            tub.apontamentos = "Não";
-            tub.tubuMaterial = "Aço Carbono";
-            tub.tubuAcabamento = "Envelopada";
-            tub.tubuVazamento = "Não";
-            tub.tubuFixacao = "NA";
-            tub.tubuFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
 
-            tub.tubuComentario = "Oxidação avançada nas tubulações";
-            tub.tubuNota = "75%";
-            tub.regiInstalacao = "OK";
-            tub.regiAcabamento = "Irregular";
-            tub.regiFixacao = "Irregular";
-            tub.regiFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+            for (var i = 0; i < detalhes.Count; i++)
+            {
+                switch (detalhes[i].Name)
+                {
+                    case "PickerNomenclatura":
+                        gerador.nomeclatura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAlimentacao":
+                        gerador.alimentacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAuditado":
+                        gerador.itemAuditado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlanejado":
+                        gerador.planejado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerExecutado":
+                        gerador.executado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubMaterial":
+                        gerador.tubuMaterial = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubAcabamento":
+                        gerador.tubuAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubVazamento":
+                        gerador.tubuVazamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubFixacao":
+                        gerador.tubuFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaTub":
+                        gerador.tubuNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegInstalacao":
+                        gerador.regiInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegAcabamento":
+                        gerador.regiAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegFixacao":
+                        gerador.regiFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaReg":
+                        gerador.regiNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNivelRisco":
+                        gerador.nivelRisco = detalhes[i].Text.ToString();
+                        break;
+                    //case "EntryLocalizacao":
+                    //    gerador.localizacao = detalhes[i].Text.ToString();
+                    //    break;
+                    case "EditorComentarioTub":
+                        gerador.tubuComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioReg":
+                        gerador.regiComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "txtNotaFinal":
+                        gerador.notaFinal = detalhes[i].Text.ToString();
+                        break;
 
-            tub.regiComentario = "As fixações precisam de uma pintura geral";
-            tub.regiNota = "75%";
-            tub.notaFinal = "47%";
-            tub.nivelRisco = "MEDIO";
+                }
+            }
 
-            return tub;
+            for (var o = 0; o < fotos.Count; o++)
+            {
+                switch (fotos[o].Name)
+                {
+                    case "GridFotosTub":
+                        gerador.tubuFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosReg":
+                        gerador.regiFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                }
+
+            }
+
+            return gerador;
         }
 
         public List<GeradoraAguaQuente> MontaGerarAguaQuente()
         {
             List<GeradoraAguaQuente> list = new List<GeradoraAguaQuente>();
-            list.Add(this.CriaGeradorAguaQuente());
+
+            Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 3);
+            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+            for (var i = 0; i < itemSubItems.Count; i++)
+            {
+                // id = 3
+                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                list.Add(this.CriaGeradorAguaQuente(detalhes, fotos));
+            }
             return list;
         }
-        public GeradoraAguaQuente CriaGeradorAguaQuente()
+        public GeradoraAguaQuente CriaGeradorAguaQuente(List<Puma.ModelosBanco.DetalhesItem> detalhes, List<Puma.ModelosBanco.FotosItem> fotos)
         {
             GeradoraAguaQuente gerador = new GeradoraAguaQuente();
 
-            gerador.nomeclatura = "Incêndio";
-            gerador.sistema = "Bomba Calor";
-            gerador.alimentacao = "Elétrico";
-            gerador.itemAuditado = "Não";
-            gerador.planejado = "Sim";
-            gerador.executado = "NA";
-            gerador.apontamentos = "Não";
-            gerador.boilMaterial = "Cobre";
-            gerador.boilIsolamentoTermico = "Danificado";
-            gerador.boilIsolamentoMecanico = "Soltando";
-            gerador.boilPortaInspecao = "OK";
-            gerador.boilTermDigital = "OK";
-            gerador.boilTermAnalogico = "Irregular";
-            gerador.boilValvulaAlivio = "Danificado";
-            gerador.boilStatusGeral = "OK";
-            gerador.boilFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+            for (var i = 0; i < detalhes.Count; i++)
+            {
+                switch (detalhes[i].Name)
+                {
+                    case "PickerNomenclatura":
+                        gerador.nomeclatura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerSistema":
+                        gerador.sistema = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAlimentacao":
+                        gerador.alimentacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAuditado":
+                        gerador.itemAuditado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlanejado":
+                        gerador.planejado = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerExecutado":
+                        gerador.executado = detalhes[i].Text.ToString();
+                        break;
 
-            gerador.boilComentario = "Boiler com Vazamento";
-            gerador.boilNota = "35%";
-            gerador.aqueInstalacao = "Corrosão";
-            gerador.aqueAcabamento = "OK";
-            gerador.aqueDetectorGas = "Irregular";
-            gerador.aqueFixacao = "OK";
-            gerador.aqueFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+                    case "PickerBoilerMaterial":
+                        gerador.boilMaterial = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoilerIsolTermico":
+                        gerador.boilIsolamentoTermico = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoilerIsolMecanico":
+                        gerador.boilIsolamentoMecanico = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoilerPortaInspecao":
+                        gerador.boilPortaInspecao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoilerTermDigital":
+                        gerador.boilTermDigital = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoilerTerAnalogico":
+                        gerador.boilTermAnalogico = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoilerValvulaAlivio":
+                        gerador.boilValvulaAlivio = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBoilerStatusGeral":
+                        gerador.boilStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaBoiler":
+                        gerador.boilNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAquePassInstalacao":
+                        gerador.aqueInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAquePassAcabamento":
+                        gerador.aqueAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAquePassDetectorGas":
+                        gerador.aqueDetectorGas = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerAquePassFixacao":
+                        gerador.aqueFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerFotoAqueNota":
+                        gerador.aqueNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaCalorInstalcao":
+                        gerador.bombcInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaCalorAcabamento":
+                        gerador.bombcAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    //case "PickerBombaCalorVazamento":
+                    //    gerador.bombc = detalhes[i].Text.ToString();
+                    //    break;
+                    case "PickerBombaCalorNota":
+                        gerador.bombcNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlacaSolarPlacas":
+                        gerador.placsPlacasSolares = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlacaSolarTubulacao":
+                        gerador.placsTubulacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlacaSolarFixacao":
+                        gerador.placsFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerPlacaSolarNota":
+                        gerador.placsNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaRolamentos":
+                        gerador.bombRolamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaAcoplamento":
+                        gerador.bombAcoplamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaSeloMecanico":
+                        gerador.bombSeloMecanico = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaAquecimento":
+                        gerador.bombAquecimento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaPintura":
+                        gerador.bombPintura = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBombaStatusGeral":
+                        gerador.bombStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaBomba":
+                        gerador.bombNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeFixacao":
+                        gerador.bfelFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeVibStop":
+                        gerador.bfelVibraStop = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeInstaEletrica":
+                        gerador.bfelInstalacaoEletrica = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerBfeStatusGeral":
+                        gerador.bfelStatusGeral = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaBfe":
+                        gerador.bfelNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubMaterial":
+                        gerador.tubuMaterial = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubAcabamento":
+                        gerador.tubuAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubVazamento":
+                        gerador.tubuVazamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerTubFixacao":
+                        gerador.tubuFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaTub":
+                        gerador.tubuNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegInstalacao":
+                        gerador.regiInstalacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegAcabamento":
+                        gerador.regiAcabamento = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerRegFixacao":
+                        gerador.regiFixacao = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNotaReg":
+                        gerador.regiNota = detalhes[i].Text.ToString();
+                        break;
+                    case "PickerNivelRisco":
+                        gerador.nivelRisco = detalhes[i].Text.ToString();
+                        break;
+                    //case "EntryLocalizacao":
+                    //    gerador.localizacao = detalhes[i].Text.ToString();
+                    //    break;
+                    case "EditorComentarioBoiler":
+                        gerador.boilComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioAquePass":
+                        gerador.aqueComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioBombaCalor":
+                        gerador.bombcComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioPlacaSolar":
+                        gerador.placsComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioBomba":
+                        gerador.bombcComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioBfe":
+                        gerador.bfelComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioTub":
+                        gerador.tubuComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "EditorComentarioReg":
+                        gerador.regiComentario = detalhes[i].Text.ToString();
+                        break;
+                    case "txtNotaFinal":
+                        gerador.notaFinal = detalhes[i].Text.ToString();
+                        break;
 
-            gerador.aqueComentario = "Dois aquecedores estão desligados";
-            gerador.aqueNota = "35%";
-            gerador.bombcInstalacao = "Vazando";
-            gerador.bombcAcabamento = "OK";
-            gerador.bombcFixacao = "OK";
-            gerador.bombcFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+                }
+            }
 
-            gerador.bombcComentario = "Comprerssor Queimado";
-            gerador.bombcNota = "35%";
-            gerador.placsPlacasSolares = "Suja";
-            gerador.placsTubulacao = "Corrosão";
-            gerador.placsFixacao = "OK";
-            gerador.placsFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
+            for (var o = 0; o < fotos.Count; o++)
+            {
+                switch (fotos[o].Name)
+                {
+                    case "GridFotosBoiler":
+                        gerador.boilFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosAquePass":
+                        gerador.aqueFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosBombaCalor":
+                        gerador.bombcFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosPlacaSolar":
+                        gerador.placsFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosBomba":
+                        gerador.bombFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosBfe":
+                        gerador.bfelFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosTub":
+                        gerador.tubuFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                    case "GridFotosReg":
+                        gerador.regiFotos.Add(new Imagem("data:image/png;base64," + fotos[o].Base64));
+                        break;
+                }
 
-            gerador.placsComentario = "Sete Placas quebradas e sujas";
-            gerador.placsNota = "35%";
-            gerador.bombRolamento = "Com vibrações";
-            gerador.bombAcoplamento = "OK";
-            gerador.bombSeloMecanico = "Irregular";
-            gerador.bombAquecimento = "Sim";
-            gerador.bombPintura = "Oxidada";
-            gerador.bombStatusGeral = "OK";
-            gerador.bombFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-
-            gerador.bombComentario = "Bomba está totalmente danificada";
-            gerador.bombNota = "35%";
-            gerador.bfelFixacao = "OK";
-            gerador.bfelVibraStop = "Irregular";
-            gerador.bfelInstalacaoEletrica = "Irregular";
-            gerador.bfelStatusGeral = "Com Corrosão";
-            gerador.bfelFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-
-            gerador.bfelComentario = "Bomba com aquecimento e oxidada";
-            gerador.bfelNota = "35%";
-            gerador.tubuMaterial = "Aço Carbono";
-            gerador.tubuAcabamento = "Envelopada";
-            gerador.tubuVazamento = "Não";
-            gerador.tubuFixacao = "NA";
-            gerador.tubuFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-
-            gerador.tubuComentario = "Oxidação avançada nas tubulações";
-            gerador.tubuNota = "75%";
-            gerador.regiInstalacao = "OK";
-            gerador.regiAcabamento = "Irregular";
-            gerador.regiFixacao = "Irregular";
-            gerador.regiFotos.Add(new Imagem("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QIJBywfp3IOswAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAkUlEQVQY052PMQqDQBREZ1f/d1kUm3SxkeAF/FdIjpOcw2vpKcRWCwsRPMFPsaIQSIoMr5pXDGNUFd9j8TOn7kRW71fvO5HTq6qqtnWtzh20IqE3YXtL0zyKwAROQLQ5l/c9gHjfKK6wMZjADE6s49Dver4/smEAc2CuqgwAYI5jU9NcxhHEy60sni986H9+vwG1yDHfK1jitgAAAABJRU5ErkJggg=="));
-
-            gerador.regiComentario = "As fixações precisam de uma pintura geral";
-            gerador.regiNota = "75%";
-            gerador.notaFinal = "47%";
-            gerador.nivelRisco = "MEDIO";
-
-
+            }
             return gerador;
         }
 

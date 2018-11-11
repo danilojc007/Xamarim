@@ -21,6 +21,7 @@ namespace Puma.Banco
             _conexao.CreateTable<ItemSubItem>();
             _conexao.CreateTable<DetalhesItem>();
             _conexao.CreateTable<Emails>();
+            _conexao.CreateTable<FotosItem>();
 
         }
         public void CriarRelatorio(Relatorios relatorio)
@@ -87,9 +88,17 @@ namespace Puma.Banco
         {
             _conexao.Insert(subItemSetor);
         }
+        public void UpdateeSubItemSetor(Subitemsetor subItemSetor)
+        {
+            _conexao.Update(subItemSetor);
+        }
         public List<ItemSubItem> GetListItemsSubItem(Subitemsetor subItemSetor)
         {
             return _conexao.Table<ItemSubItem>().Where(a => a.RelatoriosId == subItemSetor.Idrelatorio && a.Idsetor == subItemSetor.Idsetor && a.Idsubitem == subItemSetor.Id).ToList();
+        }
+        public List<ItemSubItem> GetListItemsSubItemBySetor(Setores setor)
+        {
+            return _conexao.Table<ItemSubItem>().Where(a => a.RelatoriosId == setor.Idrelatorio && a.Idsetor == setor.Id).ToList();
         }
         public ItemSubItem GetItemsSubItem(Subitemsetor subItemSetor)
         {
@@ -111,9 +120,35 @@ namespace Puma.Banco
         {
             _conexao.Insert(item);
         }
-        public void CadastroEmail(Email email)
-        {
 
+        public List<FotosItem> GetFotosItems(ItemSubItem itemSub)
+        {
+            return _conexao.Table<FotosItem>().Where(a => a.Idrelatorio == itemSub.RelatoriosId && a.Idsetor == itemSub.Idsetor && a.Idsubitem == itemSub.Idsubitem && a.Iditemsubitem == itemSub.Id).ToList();
+
+        }
+        public FotosItem GetFotoItem(FotosItem foto)
+        {
+            return _conexao.Table<FotosItem>().Where(a => a.Id == foto.Id).FirstOrDefault();
+        }
+        public void CreateFotosItem(FotosItem foto)
+        {
+            _conexao.Insert(foto);
+        }
+        public void DeleteFotosItem(FotosItem foto)
+        {
+            _conexao.Delete(foto);
+        }
+        public void UpdateFotosItem(FotosItem foto)
+        {
+            _conexao.Insert(foto);
+        }
+        public void CadastroEmail(Emails email)
+        {
+            _conexao.Insert(email);
+        }
+        public List<Emails> GetEmails()
+        {
+            return _conexao.Table<Emails>().ToList();
         }
     }
 }

@@ -42,7 +42,9 @@ namespace Puma.Paginas
         private Manipulacao manipulacao = new Manipulacao();
         private CarroselSubItems carousel = null;
 
-
+        //Parte das Fotos 
+        List<Puma.ModelosBanco.FotosItem> FotosItem = new List<Puma.ModelosBanco.FotosItem>();
+        List<Puma.ModelosBanco.FotosItem> DeleteFotosItem = new List<Puma.ModelosBanco.FotosItem>();
         // parte do Banco
         List<Puma.ModelosBanco.DetalhesItem> detalhesItem = null;
         Puma.ModelosBanco.ItemSubItem itemSubItem = null;
@@ -291,6 +293,7 @@ namespace Puma.Paginas
                         }
                     }
                 }
+                this.CarregaPictures();
 
             }
             else
@@ -298,7 +301,59 @@ namespace Puma.Paginas
                 this.editado = 'S';
             }
         }
+        public void CarregaPictures()
+        {
+            this.FotosItem = database.GetFotosItems(this.itemSubItem);
 
+            for (var i = 0; i < this.FotosItem.Count; i++)
+            {
+                Grid grid = (Grid)this.FindByName<Grid>(this.FotosItem[i].Name);
+                this.AdicionarFotoCarregada(grid, FotosItem[i].Base64);
+            }
+        }
+        public void AdicionarFotoCarregada(Grid grid, string base64)
+        {
+            var index = grid.Children.Count;
+            var colum = grid.ColumnDefinitions.Count;
+            var row = grid.RowDefinitions.Count;
+            var multiplicacao = colum * row;
+
+            if (multiplicacao > index)
+            {
+                row = index / colum;
+                colum = index % colum;
+
+            }
+            else
+            {
+                grid.RowDefinitions.Add(new RowDefinition { Height = 150 });
+                colum = 0;
+            }
+
+            var image = new Image { Source = "", HeightRequest = 100 };
+
+            TapGestureRecognizer tap = new TapGestureRecognizer();
+            tap.Tapped += this.OpaCliclouNaFoto;
+            image.GestureRecognizers.Add(tap);
+
+            byte[] Base64Stream = Convert.FromBase64String(base64);
+            image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(Base64Stream));
+
+            grid.Children.Add(image, colum, row);
+
+        }
+        public void SavePictures()
+        {
+            this.SavePictures();
+            for (var i = 0; i < FotosItem.Count; i++)
+            {
+                if (database.GetFotoItem(FotosItem[i]) == null)
+                {
+                    //create
+                    database.CreateFotosItem(FotosItem[i]);
+                }
+            }
+        }
 
         public void Save()
         {
@@ -550,37 +605,69 @@ namespace Puma.Paginas
         public void AdicionarFotoBomba(object sender, EventArgs e)
         {
             this.AdicionarFoto(GridFotosBomba);
+            this.ChangeForSave();
         }
         public void RemoverUltimaFotoBomba(object sender, EventArgs e)
         {
             manipulacao.RemovePicture(GridFotosBomba);
+            if (this.FotosItem.Count > 0)
+            {
+                Puma.ModelosBanco.FotosItem foto = this.FotosItem[this.FotosItem.Count - 1];
+                this.FotosItem.RemoveAt(this.FotosItem.Count - 1);
+                this.DeleteFotosItem.Add(foto);
+                this.ChangeForSave();
+            }
         }
 
         public void AdicionarFotoBfe(object sender, EventArgs e)
         {
             this.AdicionarFoto(GridFotosBfe);
+            this.ChangeForSave();
         }
         public void RemoverUltimaFotoBfe(object sender, EventArgs e)
         {
             manipulacao.RemovePicture(GridFotosBfe);
+            if (this.FotosItem.Count > 0)
+            {
+                Puma.ModelosBanco.FotosItem foto = this.FotosItem[this.FotosItem.Count - 1];
+                this.FotosItem.RemoveAt(this.FotosItem.Count - 1);
+                this.DeleteFotosItem.Add(foto);
+                this.ChangeForSave();
+            }
         }
 
         public void AdicionarFotoTub(object sender, EventArgs e)
         {
             this.AdicionarFoto(GridFotosTub);
+            this.ChangeForSave();
         }
         public void RemoverUltimaFotoTub(object sender, EventArgs e)
         {
             manipulacao.RemovePicture(GridFotosTub);
+            if (this.FotosItem.Count > 0)
+            {
+                Puma.ModelosBanco.FotosItem foto = this.FotosItem[this.FotosItem.Count - 1];
+                this.FotosItem.RemoveAt(this.FotosItem.Count - 1);
+                this.DeleteFotosItem.Add(foto);
+                this.ChangeForSave();
+            }
         }
 
         public void AdicionarFotoReg(object sender, EventArgs e)
         {
             this.AdicionarFoto(GridFotosReg);
+            this.ChangeForSave();
         }
         public void RemoverUltimaFotoReg(object sender, EventArgs e)
         {
             manipulacao.RemovePicture(GridFotosReg);
+            if (this.FotosItem.Count > 0)
+            {
+                Puma.ModelosBanco.FotosItem foto = this.FotosItem[this.FotosItem.Count - 1];
+                this.FotosItem.RemoveAt(this.FotosItem.Count - 1);
+                this.DeleteFotosItem.Add(foto);
+                this.ChangeForSave();
+            }
         }
         public async void CameraButton_Clicked(Image image, Grid grid, int colum, int row)
         {
@@ -604,6 +691,35 @@ namespace Puma.Paginas
                 //await DisplayAlert("File Path", file.Path, "Ok");
                 image.Source = ImageSource.FromStream(() => { return file.GetStream(); });
                 grid.Children.Add(image, colum, row);
+
+                var stream = file.GetStream();
+                var bytes = new byte[stream.Length];
+                await stream.ReadAsync(bytes, 0, (int)stream.Length);
+                string base64 = System.Convert.ToBase64String(bytes);
+                Puma.ModelosBanco.FotosItem foto = new Puma.ModelosBanco.FotosItem();
+                foto.Idrelatorio = this.itemSubItem.RelatoriosId;
+                foto.Idsetor = this.itemSubItem.Idsetor;
+                foto.Idsubitem = this.itemSubItem.Idsubitem;
+                foto.Iditemsubitem = this.itemSubItem.Id;
+                if (grid == GridFotosBomba)
+                {
+                    foto.Name = "GridFotosBomba";
+                }
+                if (grid == GridFotosBfe)
+                {
+                    foto.Name = "GridFotosBfe";
+                }
+                if (grid == GridFotosTub)
+                {
+                    foto.Name = "GridFotosTub";
+                }
+                if (grid == GridFotosReg)
+                {
+                    foto.Name = "GridFotosReg";
+                }
+
+                foto.Base64 = base64;
+                this.FotosItem.Add(foto);
             }
 
         }
@@ -624,6 +740,14 @@ namespace Puma.Paginas
                 subItem.Idsetor = this.itemSubItem.Idsetor;
                 subItem.Idsubitem = this.itemSubItem.Idsubitem;
                 subItem.Contador = this.itemSubItem.Contador + 1;
+
+                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                if (subSetor != null)
+                {
+                    subSetor.Quantidade = subItem.Contador;
+                    database.UpdateeSubItemSetor(subSetor);
+                }
 
                 ContentPage barrilete = new HidraBarrilhete(this.carousel, subItem, database);
                 this.database.CreateItemSubItem(subItem);

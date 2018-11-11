@@ -39,6 +39,9 @@ namespace Puma.Paginas.Hidraulica
         private List<ComboBox> centralDetectorGas = new List<ComboBox>();
         private List<ComboBox> centralExtintores = new List<ComboBox>();
         private List<ComboBox> centralLocal = new List<ComboBox>();
+        //Parte das Fotos 
+        List<Puma.ModelosBanco.FotosItem> FotosItem = new List<Puma.ModelosBanco.FotosItem>();
+        List<Puma.ModelosBanco.FotosItem> DeleteFotosItem = new List<Puma.ModelosBanco.FotosItem>();
 
         // parte do Banco
         List<Puma.ModelosBanco.DetalhesItem> detalhesItem = null;
@@ -106,6 +109,9 @@ namespace Puma.Paginas.Hidraulica
             regInstalacao.Add(new ComboBox(1, "Ok", "#008000"));
             regInstalacao.Add(new ComboBox(2, "Irregular", "#FF0000"));
             regInstalacao.Add(new ComboBox(3, "Sem identificação", "#FF0000"));
+
+            regFixacao.Add(new ComboBox(1, "Ok", "#008000"));
+            regFixacao.Add(new ComboBox(2, "Irregular", "#FF0000"));
 
             regAcabamento.Add(new ComboBox(1, "Ok", "#008000"));
             regAcabamento.Add(new ComboBox(2, "Irregular", "#FF0000"));
@@ -239,6 +245,7 @@ namespace Puma.Paginas.Hidraulica
                         }
                     }
                 }
+                this.CarregaPictures();
 
             }
             else
@@ -307,26 +314,50 @@ namespace Puma.Paginas.Hidraulica
         public void AdicionarFotoTub(object sender, EventArgs e)
         {
             this.AdicionarFoto(GridFotosTub);
+            this.ChangeForSave();
         }
         public void RemoverUltimaFotoTub(object sender, EventArgs e)
         {
             manipulacao.RemovePicture(GridFotosTub);
+            if (this.FotosItem.Count > 0)
+            {
+                Puma.ModelosBanco.FotosItem foto = this.FotosItem[this.FotosItem.Count - 1];
+                this.FotosItem.RemoveAt(this.FotosItem.Count - 1);
+                this.DeleteFotosItem.Add(foto);
+                this.ChangeForSave();
+            }
         }
         public void AdicionarFotoReg(object sender, EventArgs e)
         {
             this.AdicionarFoto(GridFotosReg);
+            this.ChangeForSave();
         }
         public void RemoverUltimaFotoReg(object sender, EventArgs e)
         {
             manipulacao.RemovePicture(GridFotosReg);
+            if (this.FotosItem.Count > 0)
+            {
+                Puma.ModelosBanco.FotosItem foto = this.FotosItem[this.FotosItem.Count - 1];
+                this.FotosItem.RemoveAt(this.FotosItem.Count - 1);
+                this.DeleteFotosItem.Add(foto);
+                this.ChangeForSave();
+            }
         }
         public void AdicionarFotoCentral(object sender, EventArgs e)
         {
             this.AdicionarFoto(GridFotosCentral);
+            this.ChangeForSave();
         }
         public void RemoverUltimaFotoCentral(object sender, EventArgs e)
         {
             manipulacao.RemovePicture(GridFotosCentral);
+            if (this.FotosItem.Count > 0)
+            {
+                Puma.ModelosBanco.FotosItem foto = this.FotosItem[this.FotosItem.Count - 1];
+                this.FotosItem.RemoveAt(this.FotosItem.Count - 1);
+                this.DeleteFotosItem.Add(foto);
+                this.ChangeForSave();
+            }
         }
         public async void CameraButton_Clicked(Image image, Grid grid, int colum, int row)
         {
@@ -350,6 +381,32 @@ namespace Puma.Paginas.Hidraulica
                 //await DisplayAlert("File Path", file.Path, "Ok");
                 image.Source = ImageSource.FromStream(() => { return file.GetStream(); });
                 grid.Children.Add(image, colum, row);
+
+                var stream = file.GetStream();
+                var bytes = new byte[stream.Length];
+                await stream.ReadAsync(bytes, 0, (int)stream.Length);
+                string base64 = System.Convert.ToBase64String(bytes);
+                Puma.ModelosBanco.FotosItem foto = new Puma.ModelosBanco.FotosItem();
+                foto.Idrelatorio = this.itemSubItem.RelatoriosId;
+                foto.Idsetor = this.itemSubItem.Idsetor;
+                foto.Idsubitem = this.itemSubItem.Idsubitem;
+                foto.Iditemsubitem = this.itemSubItem.Id;
+                if (grid == GridFotosTub)
+                {
+                    foto.Name = "GridFotosTub";
+                }
+                if (grid == GridFotosReg)
+                {
+                    foto.Name = "GridFotosReg";
+                }
+                if (grid == GridFotosCentral)
+                {
+                    foto.Name = "GridFotosCentral";
+                }
+
+
+                foto.Base64 = base64;
+                this.FotosItem.Add(foto);
             }
 
         }
@@ -372,6 +429,14 @@ namespace Puma.Paginas.Hidraulica
                 subItem.Idsubitem = this.itemSubItem.Idsubitem;
                 subItem.Contador = this.itemSubItem.Contador + 1;
 
+                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                if (subSetor != null)
+                {
+                    subSetor.Quantidade = subItem.Contador;
+                    database.UpdateeSubItemSetor(subSetor);
+                }
+
                 ContentPage redeGas = new HidraRedeGas(this.carousel, subItem, database);
                 this.database.CreateItemSubItem(subItem);
                 this.carousel.Children.Add(redeGas);
@@ -379,8 +444,61 @@ namespace Puma.Paginas.Hidraulica
             }
 
         }
+        public void CarregaPictures()
+        {
+            this.FotosItem = database.GetFotosItems(this.itemSubItem);
+
+            for (var i = 0; i < this.FotosItem.Count; i++)
+            {
+                Grid grid = (Grid)this.FindByName<Grid>(this.FotosItem[i].Name);
+                this.AdicionarFotoCarregada(grid, FotosItem[i].Base64);
+            }
+        }
+        public void AdicionarFotoCarregada(Grid grid, string base64)
+        {
+            var index = grid.Children.Count;
+            var colum = grid.ColumnDefinitions.Count;
+            var row = grid.RowDefinitions.Count;
+            var multiplicacao = colum * row;
+
+            if (multiplicacao > index)
+            {
+                row = index / colum;
+                colum = index % colum;
+
+            }
+            else
+            {
+                grid.RowDefinitions.Add(new RowDefinition { Height = 150 });
+                colum = 0;
+            }
+
+            var image = new Image { Source = "", HeightRequest = 100 };
+
+            TapGestureRecognizer tap = new TapGestureRecognizer();
+            tap.Tapped += this.OpaCliclouNaFoto;
+            image.GestureRecognizers.Add(tap);
+
+            byte[] Base64Stream = Convert.FromBase64String(base64);
+            image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(Base64Stream));
+
+            grid.Children.Add(image, colum, row);
+
+        }
+        public void SavePictures()
+        {
+            for (var i = 0; i < FotosItem.Count; i++)
+            {
+                if (database.GetFotoItem(FotosItem[i]) == null)
+                {
+                    //create
+                    database.CreateFotosItem(FotosItem[i]);
+                }
+            }
+        }
         public void Save()
         {
+            this.SavePictures();
             if (detalhesItem.Count != 0)
             {
                 for (var i = 0; i < detalhesItem.Count; i++)

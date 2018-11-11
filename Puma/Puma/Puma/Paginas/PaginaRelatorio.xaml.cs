@@ -104,6 +104,28 @@ namespace Puma.Paginas
                 items.Clear();
                 for (var o = 0; o < setoresBanco.Count; o++)
                 {
+                    string correto = "S";
+                    setoresBanco[o].Status = "Success;";
+                    setoresBanco[o].Icone = "check.png";
+                    List<Puma.ModelosBanco.Subitemsetor> itemsSetor = database.GetListSubitemSetor(setoresBanco[o].Idrelatorio, setoresBanco[o].Id);
+                    for (var i = 0; i < itemsSetor.Count; i++)
+                    {
+                        if (itemsSetor[i].Quantidade == 0)
+                        {
+                            correto = "N";
+                            setoresBanco[o].Icone = "proibido.png";
+                            setoresBanco[o].Status = "Error;";
+                            break;
+
+                        }
+                    }
+                    if (itemsSetor.Count == 0)
+                    {
+                        correto = "N";
+                        setoresBanco[o].Icone = "proibido.png";
+                        setoresBanco[o].Status = "Error;";
+                    }
+
                     items.Add(new TipoItem(setoresBanco[o].Id, setoresBanco[o].Nome, setoresBanco[o].Icone, setoresBanco[o].Status));
                 }
 
@@ -140,7 +162,7 @@ namespace Puma.Paginas
         public void PressBtnEviarRelatorio(object sender, EventArgs e)
         {
             this.AtualizaRelatorio();
-            var page = new EnviarEmail();
+            var page = new EnviarEmail(this.relatorioBanco);
             Navigation.PushAsync(page);
         }
 

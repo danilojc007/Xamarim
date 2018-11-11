@@ -151,8 +151,16 @@ namespace Puma.Paginas
                                 subItem.Idsetor = subItemSetorSelected.Idsetor;
                                 subItem.Idsubitem = subItemSetorSelected.Id;
                                 subItem.Contador = 1;
-
                                 database.CreateItemSubItem(subItem);
+
+                                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                                if (subSetor != null)
+                                {
+                                    subSetor.Quantidade = subItem.Contador;
+                                    database.UpdateeSubItemSetor(subSetor);
+                                }
+
                                 Children.Add(new Reservatorios(this, subItem, database));
                             }
                             break;
@@ -173,8 +181,15 @@ namespace Puma.Paginas
                                 subItem.Idsetor = subItemSetorSelected.Idsetor;
                                 subItem.Idsubitem = subItemSetorSelected.Id;
                                 subItem.Contador = 1;
-
                                 database.CreateItemSubItem(subItem);
+                                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                                if (subSetor != null)
+                                {
+                                    subSetor.Quantidade = subItem.Contador;
+                                    database.UpdateeSubItemSetor(subSetor);
+                                }
+
                                 Children.Add(new HidraBarrilhete(this, subItem, database));
                             }
                             break;
@@ -194,8 +209,14 @@ namespace Puma.Paginas
                                 subItem.Idsetor = subItemSetorSelected.Idsetor;
                                 subItem.Idsubitem = subItemSetorSelected.Id;
                                 subItem.Contador = 1;
-
                                 database.CreateItemSubItem(subItem);
+                                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                                if (subSetor != null)
+                                {
+                                    subSetor.Quantidade = subItem.Contador;
+                                    database.UpdateeSubItemSetor(subSetor);
+                                }
                                 Children.Add(new HidraGeradorAguaQuente(this, subItem, database));
                             }
                             break;
@@ -215,8 +236,14 @@ namespace Puma.Paginas
                                 subItem.Idsetor = subItemSetorSelected.Idsetor;
                                 subItem.Idsubitem = subItemSetorSelected.Id;
                                 subItem.Contador = 1;
-
                                 database.CreateItemSubItem(subItem);
+                                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                                if (subSetor != null)
+                                {
+                                    subSetor.Quantidade = subItem.Contador;
+                                    database.UpdateeSubItemSetor(subSetor);
+                                }
                                 Children.Add(new HidraRede(this, subItem, database));
                             }
                             break;
@@ -236,8 +263,14 @@ namespace Puma.Paginas
                                 subItem.Idsetor = subItemSetorSelected.Idsetor;
                                 subItem.Idsubitem = subItemSetorSelected.Id;
                                 subItem.Contador = 1;
-
                                 database.CreateItemSubItem(subItem);
+                                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                                if (subSetor != null)
+                                {
+                                    subSetor.Quantidade = subItem.Contador;
+                                    database.UpdateeSubItemSetor(subSetor);
+                                }
                                 Children.Add(new HidraBombas(this, subItem, database));
                             }
                             break;
@@ -257,8 +290,14 @@ namespace Puma.Paginas
                                 subItem.Idsetor = subItemSetorSelected.Idsetor;
                                 subItem.Idsubitem = subItemSetorSelected.Id;
                                 subItem.Contador = 1;
-
                                 database.CreateItemSubItem(subItem);
+                                Puma.ModelosBanco.Subitemsetor subSetor = new Puma.ModelosBanco.Subitemsetor();
+                                subSetor = database.GetSubItemSetor(subItem.RelatoriosId, subItem.Idsetor, subItem.Idsubitem);
+                                if (subSetor != null)
+                                {
+                                    subSetor.Quantidade = subItem.Contador;
+                                    database.UpdateeSubItemSetor(subSetor);
+                                }
                                 Children.Add(new HidraRedeGas(this, subItem, database));
                             }
                             break;
