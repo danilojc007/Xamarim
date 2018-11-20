@@ -34,7 +34,7 @@ namespace Puma.Modelo.ApiConnector
             header.gerente = relatorio.Gerente;
             header.auditor = relatorio.Auditor;
             header.endereco = relatorio.Endereco;
-            header.macAddress = serial.SerialNumber();
+            header.serial = serial.SerialNumber();
             header.modulos = new Modulos();
 
             //Instalações Hidraulicas
@@ -84,6 +84,10 @@ namespace Puma.Modelo.ApiConnector
 
             for (var i = 0; i < detalhes.Count; i++)
             {
+                if (detalhes[i].Text == null)
+                {
+                    detalhes[i].Text = "";
+                }
                 switch (detalhes[i].Name)
                 {
                     case "PickerNomenclatura":
@@ -231,6 +235,10 @@ namespace Puma.Modelo.ApiConnector
 
             for (var i = 0; i < detalhes.Count; i++)
             {
+                if (detalhes[i].Text == null)
+                {
+                    detalhes[i].Text = "";
+                }
                 switch (detalhes[i].Name)
                 {
                     case "PickerNomenclatura":
@@ -351,6 +359,10 @@ namespace Puma.Modelo.ApiConnector
             Bombas gerador = new Bombas();
             for (var i = 0; i < detalhes.Count; i++)
             {
+                if (detalhes[i].Text == null)
+                {
+                    detalhes[i].Text = "";
+                }
                 switch (detalhes[i].Name)
                 {
                     case "PickerNomenclatura":
@@ -364,6 +376,9 @@ namespace Puma.Modelo.ApiConnector
                         break;
                     case "PickerExecutado":
                         gerador.executado = detalhes[i].Text;
+                        break;
+                    case "PickerApontamentos":
+                        gerador.apontamentos = detalhes[i].Text;
                         break;
                     case "PickerBombaRolamentos":
                         gerador.bombRolamento = detalhes[i].Text;
@@ -385,6 +400,9 @@ namespace Puma.Modelo.ApiConnector
                         break;
                     case "PickerNotaBomba":
                         gerador.bombNota = detalhes[i].Text;
+                        break;
+                    case "EditorComentarioBomba":
+                        gerador.bombComentario = detalhes[i].Text;
                         break;
                     case "PickerBfeFixacao":
                         gerador.bfelFixacao = detalhes[i].Text;
@@ -453,13 +471,17 @@ namespace Puma.Modelo.ApiConnector
 
             for (var i = 0; i < detalhes.Count; i++)
             {
+                if (detalhes[i].Text == null)
+                {
+                    detalhes[i].Text = "";
+                }
                 switch (detalhes[i].Name)
                 {
                     case "PickerNomenclatura":
                         gerador.nomeclatura = detalhes[i].Text;
                         break;
-                    case "PickerAlimentacao":
-                        gerador.alimentacao = detalhes[i].Text;
+                    case "EntryLocalizacao":
+                        gerador.localizacao = detalhes[i].Text;
                         break;
                     case "PickerAuditado":
                         gerador.itemAuditado = detalhes[i].Text;
@@ -469,6 +491,9 @@ namespace Puma.Modelo.ApiConnector
                         break;
                     case "PickerExecutado":
                         gerador.executado = detalhes[i].Text;
+                        break;
+                    case "PickerApontamentos":
+                        gerador.apontamentos = detalhes[i].Text;
                         break;
                     case "PickerTubMaterial":
                         gerador.tubuMaterial = detalhes[i].Text;
@@ -517,9 +542,6 @@ namespace Puma.Modelo.ApiConnector
                         break;
                     case "PickerNivelRisco":
                         gerador.nivelRisco = detalhes[i].Text;
-                        break;
-                    case "EntryLocalizacao":
-                        gerador.gasLocalInstalacao = detalhes[i].Text;
                         break;
                     case "EditorComentarioTub":
                         gerador.tubuComentario = detalhes[i].Text;
@@ -578,6 +600,10 @@ namespace Puma.Modelo.ApiConnector
 
             for (var i = 0; i < detalhes.Count; i++)
             {
+                if (detalhes[i].Text == null)
+                {
+                    detalhes[i].Text = "";
+                }
                 switch (detalhes[i].Name)
                 {
                     case "PickerNomenclatura":
@@ -591,6 +617,9 @@ namespace Puma.Modelo.ApiConnector
                         break;
                     case "PickerExecutado":
                         gerador.executado = detalhes[i].Text;
+                        break;
+                    case "PickerApontamentos":
+                        gerador.apontamentos = detalhes[i].Text;
                         break;
                     case "PickerTubMaterial":
                         gerador.tubuMaterial = detalhes[i].Text;
@@ -676,6 +705,11 @@ namespace Puma.Modelo.ApiConnector
 
             for (var i = 0; i < detalhes.Count; i++)
             {
+                if (detalhes[i].Text == null)
+                {
+                    detalhes[i].Text = "";
+                }
+
                 switch (detalhes[i].Name)
                 {
                     case "PickerNomenclatura":
@@ -696,7 +730,9 @@ namespace Puma.Modelo.ApiConnector
                     case "PickerExecutado":
                         gerador.executado = detalhes[i].Text;
                         break;
-
+                    case "PickerApontamentos":
+                        gerador.apontamentos = detalhes[i].Text;
+                        break;
                     case "PickerBoilerMaterial":
                         gerador.boilMaterial = detalhes[i].Text;
                         break;
@@ -845,7 +881,7 @@ namespace Puma.Modelo.ApiConnector
                         gerador.placsComentario = detalhes[i].Text;
                         break;
                     case "EditorComentarioBomba":
-                        gerador.bombcComentario = detalhes[i].Text;
+                        gerador.bombComentario = detalhes[i].Text;
                         break;
                     case "EditorComentarioBfe":
                         gerador.bfelComentario = detalhes[i].Text;

@@ -7,7 +7,7 @@ namespace Puma.Modelo.ApiConnector.Model.Reservatorio
     public class RedeGas
     {
         public string nomeclatura { get; set; }
-        public string alimentacao { get; set; }
+        public string localizacao { get; set; }
         public string itemAuditado { get; set; }
         public string planejado { get; set; }
         public string executado { get; set; }

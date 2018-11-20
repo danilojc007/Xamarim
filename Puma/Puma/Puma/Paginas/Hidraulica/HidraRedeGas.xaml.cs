@@ -40,8 +40,8 @@ namespace Puma.Paginas.Hidraulica
         private List<ComboBox> centralExtintores = new List<ComboBox>();
         private List<ComboBox> centralLocal = new List<ComboBox>();
         //Parte das Fotos 
-        List<Puma.ModelosBanco.FotosItem> FotosItem = new List<Puma.ModelosBanco.FotosItem>();
-        List<Puma.ModelosBanco.FotosItem> DeleteFotosItem = new List<Puma.ModelosBanco.FotosItem>();
+        public List<Puma.ModelosBanco.FotosItem> FotosItem = new List<Puma.ModelosBanco.FotosItem>();
+        public List<Puma.ModelosBanco.FotosItem> DeleteFotosItem = new List<Puma.ModelosBanco.FotosItem>();
 
         // parte do Banco
         List<Puma.ModelosBanco.DetalhesItem> detalhesItem = null;
@@ -372,7 +372,8 @@ namespace Puma.Paginas.Hidraulica
                 StoreCameraMediaOptions store = new StoreCameraMediaOptions
                 {
                     Directory = "Images",
-                    Name = DateTime.Now + "_.jpg"
+                    Name = DateTime.Now + "_.jpg",
+                    CompressionQuality = 30
                 };
 
                 var file = await CrossMedia.Current.TakePhotoAsync(store);

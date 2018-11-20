@@ -375,8 +375,8 @@
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Label Grid.Column="0" Grid.Row="0" Text="Instação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
-                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerRegInstalacao"  Title="Instação" VerticalOptions="Center" 
+                                <Label Grid.Column="0" Grid.Row="0" Text="Instalação:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start" ></Label>
+                                <Picker Grid.Column="1" Grid.Row="0" x:Name="PickerRegInstalacao"  Title="Instalação" VerticalOptions="Center" 
                             HorizontalOptions="FillAndExpand" FontSize="Small"></Picker>
 
                                 <Label Grid.Column="0" Grid.Row="1" Text="Acabamento:" VerticalTextAlignment="Center" XAlign="Start" FontSize="Small" HorizontalOptions="Start"></Label>

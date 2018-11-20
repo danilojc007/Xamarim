@@ -39,13 +39,13 @@ namespace Puma.Paginas
         private CarroselSubItems carousel = null;
 
         //Parte das Fotos 
-        List<Puma.ModelosBanco.FotosItem> FotosItem = new List<Puma.ModelosBanco.FotosItem>();
-        List<Puma.ModelosBanco.FotosItem> DeleteFotosItem = new List<Puma.ModelosBanco.FotosItem>();
+        public List<Puma.ModelosBanco.FotosItem> FotosItem = new List<Puma.ModelosBanco.FotosItem>();
+        public List<Puma.ModelosBanco.FotosItem> DeleteFotosItem = new List<Puma.ModelosBanco.FotosItem>();
 
         // parte do Banco
-        List<Puma.ModelosBanco.DetalhesItem> detalhesItem = null;
-        Puma.ModelosBanco.ItemSubItem itemSubItem = null;
-        Puma.Banco.AcessoBanco database = null;
+        public List<Puma.ModelosBanco.DetalhesItem> detalhesItem = null;
+        public Puma.ModelosBanco.ItemSubItem itemSubItem = null;
+        public Puma.Banco.AcessoBanco database = null;
         public Reservatorios(CarroselSubItems carousel, Puma.ModelosBanco.ItemSubItem itemSubItem, Puma.Banco.AcessoBanco conexao)
         {
             InitializeComponent();
@@ -504,7 +504,8 @@ namespace Puma.Paginas
                 StoreCameraMediaOptions store = new StoreCameraMediaOptions
                 {
                     Directory = "Images",
-                    Name = DateTime.Now + "_.jpg"
+                    Name = DateTime.Now + "_.jpg",
+                    CompressionQuality = 30
                 };
 
                 var file = await CrossMedia.Current.TakePhotoAsync(store);
