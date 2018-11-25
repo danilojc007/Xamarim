@@ -67,13 +67,16 @@ namespace Puma.Modelo.ApiConnector
             List<Barrilete> list = new List<Barrilete>();
 
             Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 2);
-            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
-            for (var i = 0; i < itemSubItems.Count; i++)
+            if (subSetor != null)
             {
-                // id = 1
-                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
-                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
-                list.Add(this.CriarBarrilete(detalhes, fotos));
+                List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+                for (var i = 0; i < itemSubItems.Count; i++)
+                {
+                    // id = 1
+                    List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                    List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                    list.Add(this.CriarBarrilete(detalhes, fotos));
+                }
             }
             return list;
 
@@ -219,13 +222,16 @@ namespace Puma.Modelo.ApiConnector
             List<Reservatorio> list = new List<Reservatorio>();
 
             Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 1);
-            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
-            for (var i = 0; i < itemSubItems.Count; i++)
+            if (subSetor != null)
             {
-                // id = 1
-                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
-                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
-                list.Add(this.CriaReservatorio(detalhes, fotos));
+                List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+                for (var i = 0; i < itemSubItems.Count; i++)
+                {
+                    // id = 1
+                    List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                    List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                    list.Add(this.CriaReservatorio(detalhes, fotos));
+                }
             }
             return list;
         }
@@ -342,15 +348,17 @@ namespace Puma.Modelo.ApiConnector
         {
             List<Bombas> list = new List<Bombas>();
             Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 5);
-            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
-            for (var i = 0; i < itemSubItems.Count; i++)
+            if (subSetor != null)
             {
-                // id = 6
-                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
-                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
-                list.Add(this.CriarBomba(detalhes, fotos));
+                List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+                for (var i = 0; i < itemSubItems.Count; i++)
+                {
+                    // id = 6
+                    List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                    List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                    list.Add(this.CriarBomba(detalhes, fotos));
+                }
             }
-
 
             return list;
         }
@@ -454,13 +462,16 @@ namespace Puma.Modelo.ApiConnector
         {
             List<RedeGas> list = new List<RedeGas>();
             Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 6);
-            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
-            for (var i = 0; i < itemSubItems.Count; i++)
+            if (subSetor != null)
             {
-                // id = 6
-                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
-                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
-                list.Add(this.CriaRedeGas(detalhes, fotos));
+                List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+                for (var i = 0; i < itemSubItems.Count; i++)
+                {
+                    // id = 6
+                    List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                    List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                    list.Add(this.CriaRedeGas(detalhes, fotos));
+                }
             }
             return list;
         }
@@ -583,13 +594,16 @@ namespace Puma.Modelo.ApiConnector
             List<Tubulacoes> list = new List<Tubulacoes>();
 
             Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 4);
-            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
-            for (var i = 0; i < itemSubItems.Count; i++)
+            if (subSetor != null)
             {
-                // id = 3
-                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
-                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
-                list.Add(this.CriarTubulacao(detalhes, fotos));
+                List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+                for (var i = 0; i < itemSubItems.Count; i++)
+                {
+                    // id = 3
+                    List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                    List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                    list.Add(this.CriarTubulacao(detalhes, fotos));
+                }
             }
             return list;
         }
@@ -689,13 +703,16 @@ namespace Puma.Modelo.ApiConnector
             List<GeradoraAguaQuente> list = new List<GeradoraAguaQuente>();
 
             Puma.ModelosBanco.Subitemsetor subSetor = database.GetSubItemSetor(this.relatorio.Id, 3, 3);
-            List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
-            for (var i = 0; i < itemSubItems.Count; i++)
+            if (subSetor != null)
             {
-                // id = 3
-                List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
-                List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
-                list.Add(this.CriaGeradorAguaQuente(detalhes, fotos));
+                List<Puma.ModelosBanco.ItemSubItem> itemSubItems = database.GetListItemsSubItem(subSetor);
+                for (var i = 0; i < itemSubItems.Count; i++)
+                {
+                    // id = 3
+                    List<Puma.ModelosBanco.DetalhesItem> detalhes = database.GetDetalhesItems(itemSubItems[i]);
+                    List<Puma.ModelosBanco.FotosItem> fotos = database.GetFotosItems(itemSubItems[i]);
+                    list.Add(this.CriaGeradorAguaQuente(detalhes, fotos));
+                }
             }
             return list;
         }
